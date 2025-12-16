@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAD of lang - Dil Pratiği Platformu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --success-color: #06d6a0;
+            --warning-color: #ffd166;
+            --danger-color: #ef476f;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-color), #16213e);
+            color: var(--light-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        /* Header Styles */
+        
+        header {
+            background-color: rgba(26, 26, 46, 0.95);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo h1 {
+            font-size: 26px;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            /* Düzeltme: Uyum için standart property eklendi */
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: var(--accent-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        /* Language Level Badge */
+        
+        .level-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .level-beginner {
+            background-color: var(--success-color);
+            color: #000;
+        }
+        
+        .level-intermediate {
+            background-color: var(--warning-color);
+            color: #000;
+        }
+        
+        .level-advanced {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        /* Main Content */
+        
+        .main-content {
+            display: flex;
+            margin-top: 30px;
+            gap: 25px;
+        }
+        /* Sidebar */
+        
+        .sidebar {
+            flex: 0 0 280px;
+            background-color: rgba(40, 40, 60, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+        
+        .language-list,
+        .level-list {
+            list-style: none;
+        }
+        
+        .language-item,
+        .level-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .language-item:hover,
+        .level-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .language-item.active,
+        .level-item.active {
+            background-color: var(--primary-color);
+        }
+        
+        .language-flag {
+            font-size: 20px;
+        }
+        /* Rooms Section */
+        
+        .rooms-section {
+            flex: 1;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-header h2 {
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .create-room-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .create-room-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .room-card {
+            background-color: rgba(40, 40, 60, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .room-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .room-header {
+            padding: 18px;
+            background: linear-gradient(45deg, rgba(67, 97, 238, 0.3), rgba(58, 12, 163, 0.3));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .room-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .room-language {
+            font-size: 14px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .room-body {
+            padding: 18px;
+        }
+        
+        .room-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .room-users {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .user-count {
+            background-color: var(--primary-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .room-level {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .room-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .room-topic {
+            display: inline-block;
+            background-color: rgba(76, 201, 240, 0.2);
+            color: var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .room-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn-join {
+            flex: 1;
+            background: linear-gradient(45deg, var(--success-color), #05b38c);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
+        }
+        /* Active Users */
+        
+        .active-users {
+            margin-top: 40px;
+            background-color: rgba(40, 40, 60, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .users-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(45deg, rgba(67, 97, 238, 0.2), rgba(58, 12, 163, 0.2));
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-languages {
+            font-size: 12px;
+            color: var(--accent-color);
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--gray-color);
+            transition: color 0.2s;
+        }
+        
+        .close-modal:hover {
+            color: var(--danger-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.3);
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .form-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        /* Auth Tabs */
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .auth-tab.active {
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        /* Footer */
+        
+        footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--gray-color);
+        }
+        /* Responsive */
+        
+        @media (max-width: 968px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .sidebar {
+                flex: 1;
+            }
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            .create-room-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="fileServeBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:1200;background:linear-gradient(90deg,#ffdd57,#ffd166);color:#000;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,0,0,0.05);">
+        <div style="font-weight:600;">Uyarı: Bu sayfa yerel dosyadan açıldı. Tam işlevsellik için uygulamayı sunucudan açın.</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+            <button id="openLocalBtn" class="btn btn-primary" style="padding:6px 12px;font-size:14px;">Sunucuda Aç</button>
+            <button id="dismissFileBanner" class="btn btn-outline" style="padding:6px 12px;font-size:14px;">Kapat</button>
+        </div>
+    </div>
+
+    <div id="toastContainer" style="position:fixed;right:16px;bottom:16px;z-index:2000;display:flex;flex-direction:column;gap:8px;align-items:flex-end;"></div>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-language"></i></div>
+                    <h1>DAD of lang</h1>
+                </div>
+                <div class="user-actions" id="userActions">
+                    <div id="guestActions" style="display: flex; gap: 15px;">
+                        <button class="btn btn-outline" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
+                        <button class="btn btn-primary" id="registerBtn"><i class="fas fa-user-plus"></i> Kayıt Ol</button>
+                    </div>
+                    <div class="user-profile" id="userProfile" style="display: none;">
+                        <div class="user-avatar-small" id="userAvatar">U</div>
+                        <div class="user-name" id="userDisplayName">Kullanıcı</div>
+                        <span id="socketStatus" style="display: none; margin-left: 8px; font-size: 12px; color: #06d6a0;">● Çevrimiçi</span>
+                        <button class="btn btn-outline" id="logoutBtn" style="margin-left: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h2><i class="fas fa-globe-americas"></i> Diller</h2>
+                    <ul class="language-list">
+                        <li class="language-item active">
+                            <span class="language-flag">🌍</span>
+                            <span>Tüm Diller</span>
+                        </li>
+                        <li class="language-item" data-lang="english">
+                            <span class="language-flag">🇬🇧</span>
+                            <span>İngilizce</span>
+                        </li>
+                        <li class="language-item" data-lang="spanish">
+                            <span class="language-flag">🇪🇸</span>
+                            <span>İspanyolca</span>
+                        </li>
+                        <li class="language-item" data-lang="french">
+                            <span class="language-flag">🇫🇷</span>
+                            <span>Fransızca</span>
+                        </li>
+                        <li class="language-item" data-lang="german">
+                            <span class="language-flag">🇩🇪</span>
+                            <span>Almanca</span>
+                        </li>
+                        <li class="language-item" data-lang="japanese">
+                            <span class="language-flag">🇯🇵</span>
+                            <span>Japonca</span>
+                        </li>
+                        <li class="language-item" data-lang="chinese">
+                            <span class="language-flag">🇨🇳</span>
+                            <span>Çince</span>
+                        </li>
+                        <li class="language-item" data-lang="russian">
+                            <span class="language-flag">🇷🇺</span>
+                            <span>Rusça</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h2><i class="fas fa-signal"></i> Seviyeler</h2>
+                    <ul class="level-list">
+                        <li class="level-item active" data-level="all">
+                            <span>Tüm Seviyeler</span>
+                        </li>
+                        <li class="level-item" data-level="beginner">
+                            <span>Başlangıç <span class="level-badge level-beginner">A1-A2</span></span>
+                        </li>
+                        <li class="level-item" data-level="intermediate">
+                            <span>Orta <span class="level-badge level-intermediate">B1-B2</span></span>
+                        </li>
+                        <li class="level-item" data-level="advanced">
+                            <span>İleri <span class="level-badge level-advanced">C1-C2</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h2><i class="fas fa-bullseye"></i> Pratik Türü</h2>
+                    <ul class="level-list">
+                        <li class="level-item active" data-topic="all">
+                            <span>Tüm Pratikler</span>
+                        </li>
+                        <li class="level-item" data-topic="daily">
+                            <span><i class="fas fa-comments"></i> Günlük Konuşma</span>
+                        </li>
+                        <li class="level-item" data-topic="business">
+                            <span><i class="fas fa-briefcase"></i> İş Dili</span>
+                        </li>
+                        <li class="level-item" data-topic="academic">
+                            <span><i class="fas fa-graduation-cap"></i> Akademik</span>
+                        </li>
+                        <li class="level-item" data-topic="scenario">
+                            <span><i class="fas fa-theater-masks"></i> Senaryo Pratiği</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rooms-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Aktif Dil Pratiği Odaları</h2>
+                    <div class="create-room-btn" id="createRoomBtn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Yeni Oda Oluştur</span>
+                    </div>
+                </div>
+
+                <div class="rooms-grid" id="roomsGrid">
+                </div>
+
+                <div class="active-users">
+                    <h2><i class="fas fa-user-check"></i> Çevrimiçi Dil Öğrenenler</h2>
+                    <div class="users-list" id="activeUsersList">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-user-circle"></i> <span id="authModalTitle">Giriş Yap</span></h2>
+                <span class="close-modal" data-modal="authModal">&times;</span>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="loginTab">Giriş Yap</div>
+                <div class="auth-tab" id="registerTab">Kayıt Ol</div>
+            </div>
+
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginEmail">E-posta</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="E-posta adresinizi girin" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Şifre</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Şifrenizi girin" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Giriş Yap
+                    </button>
+                </div>
+                <div class="form-footer">
+                    Hesabınız yok mu? <a id="switchToRegister">Kayıt Olun</a>
+                </div>
+            </form>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="registerName">Ad Soyad</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="Adınız ve soyadınız" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">E-posta</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="E-posta adresinizi girin" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="Şifrenizi girin (en az 6 karakter)" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Şifre Tekrar</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Şifrenizi tekrar girin" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerLanguages">Öğrenmek İstediğiniz Diller</label>
+                    <select id="registerLanguages" class="form-control" multiple>
+                        <option value="english">İngilizce</option>
+                        <option value="spanish">İspanyolca</option>
+                        <option value="french">Fransızca</option>
+                        <option value="german">Almanca</option>
+                        <option value="japanese">Japonca</option>
+                    </select>
+                    <small>Çoklu seçim için Ctrl tuşunu basılı tutun</small>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i> Kayıt Ol
+                    </button>
+                </div>
+                <div class="form-footer">
+                    Zaten hesabınız var mı? <a id="switchToLogin">Giriş Yapın</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="createRoomModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-plus-circle"></i> Yeni Dil Pratiği Odası Oluştur</h2>
+                <span class="close-modal" data-modal="createRoomModal">&times;</span>
+            </div>
+            <form id="createRoomForm">
+                <div class="form-group">
+                    <label for="roomName">Oda Adı</label>
+                    <input type="text" id="roomName" class="form-control" placeholder="Örn: İngilizce Günlük Konuşma Pratiği" required>
+                </div>
+                <div class="form-group">
+                    <label for="roomLanguage">Pratik Dili</label>
+                    <select id="roomLanguage" class="form-control" required>
+                        <option value="">Dil seçin</option>
+                        <option value="english">İngilizce</option>
+                        <option value="spanish">İspanyolca</option>
+                        <option value="french">Fransızca</option>
+                        <option value="german">Almanca</option>
+                        <option value="japanese">Japonca</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="roomLevel">Seviye</label>
+                    <select id="roomLevel" class="form-control" required>
+                        <option value="">Seviye seçin</option>
+                        <option value="beginner">Başlangıç (A1-A2)</option>
+                        <option value="intermediate">Orta (B1-B2)</option>
+                        <option value="advanced">İleri (C1-C2)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="roomTopic">Pratik Türü</label>
+                    <select id="roomTopic" class="form-control" required>
+                        <option value="">Pratik türü seçin</option>
+                        <option value="daily">Günlük Konuşma</option>
+                        <option value="business">İş Dili</option>
+                        <option value="academic">Akademik</option>
+                        <option value="scenario">Senaryo Pratiği</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="roomDescription">Açıklama <span style="color: var(--danger-color);">*</span></label>
+                    <textarea id="roomDescription" class="form-control" rows="3" placeholder="Odanızın amacını ve pratik konularını açıklayın" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-plus-circle"></i> Odayı Oluştur
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="roomViewModal" style="display: none;">
+        <div class="modal-content" style="width: 90%; max-width: 1000px; height: 80vh; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title" id="roomViewTitle">Oda Adı</h2>
+                    <div id="roomViewInfo" style="font-size: 12px; color: var(--gray-color); margin-top: 5px;">
+                    </div>
+                </div>
+                <span class="close-modal" id="closeRoomView" data-modal="roomViewModal">&times;</span>
+            </div>
+
+            <div style="display: flex; flex: 1; gap: 15px; padding: 15px; overflow: hidden; flex-direction: column;">
+                <div id="videoGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; flex-shrink: 0; max-height: 40%; overflow-y: auto; background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                    <div id="localVideoContainer" style="position: relative; background-color: #000; border-radius: 8px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
+                        <video id="localVideo" style="width: 100%; height: 100%; border-radius: 8px; object-fit: cover;"></video>
+                        <div style="position: absolute; bottom: 5px; left: 5px; background-color: rgba(0,0,0,0.7); padding: 5px 10px; border-radius: 4px; font-size: 11px; color: white;">Siz</div>
+                    </div>
+                    <div id="remoteVideosContainer" style="display: contents;">
+                    </div>
+                </div>
+
+                <div style="display: flex; flex: 1; gap: 15px; min-height: 0; overflow: hidden;">
+                    <div style="flex: 1; display: flex; flex-direction: column; border: 1px solid var(--gray-color); border-radius: 8px; overflow: hidden;">
+                        <div id="messagesContainer" style="flex: 1; overflow-y: auto; padding: 15px; background-color: rgba(255,255,255,0.05);">
+                            <p style="text-align: center; color: var(--gray-color);">Sohbete başlamak için bir mesaj yazın...</p>
+                        </div>
+
+                        <div style="padding: 15px; border-top: 1px solid var(--gray-color); background-color: rgba(0,0,0,0.2);">
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="messageInput" class="form-control" placeholder="Mesaj yazın..." style="flex: 1; padding: 10px; border-radius: 4px;">
+                                <button id="sendMessageBtn" class="btn btn-primary" style="padding: 10px 20px;">
+                                    <i class="fas fa-paper-plane"></i> Gönder
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="width: 200px; border: 1px solid var(--gray-color); border-radius: 8px; display: flex; flex-direction: column; background-color: rgba(0,0,0,0.2);">
+                        <div style="padding: 15px; border-bottom: 1px solid var(--gray-color);">
+                            <h3 style="margin: 0 0 10px 0; font-size: 14px;">
+                                <i class="fas fa-users"></i> Üyeler
+                            </h3>
+                            <div id="roomMemberCount" style="font-size: 12px; color: var(--accent-color);">0 üye</div>
+                        </div>
+                        <div id="roomMembersContainer" style="flex: 1; overflow-y: auto; padding: 10px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding: 15px; border-top: 1px solid var(--gray-color); background-color: rgba(0,0,0,0.2); display: flex; gap: 10px; justify-content: center;">
+                    <button id="toggleAudioBtn" class="btn" style="padding: 8px 15px; background-color: var(--primary-color);">
+                    <i class="fas fa-microphone"></i> Ses Aç
+                </button>
+                    <button id="toggleVideoBtn" class="btn" style="padding: 8px 15px; background-color: var(--primary-color);">
+                    <i class="fas fa-video"></i> Video Aç
+                </button>
+                    <button id="leaveRoomBtn" class="btn" style="padding: 8px 15px; background-color: var(--danger-color);">
+                    <i class="fas fa-sign-out-alt"></i> Ayrıl
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>DAD of lang &copy; 2025 - Dil Pratiği Platformu</p>
+            <p>Dünyanın dört bir yanındaki insanlarla dil pratiği yapın, konuşma becerilerinizi geliştirin!</p>
+        </div>
+    </footer>
+
+    <script>
+        // Determine API base (fallback to localhost when opened as file://)
+        const _origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : null;
+        const API_HOST = (_origin && _origin !== 'null' && !_origin.startsWith('file:')) ? _origin : 'http://localhost:4000';
+        const API_BASE_URL = API_HOST.replace(/\/$/, '') + '/api';
+
+        // Dynamically load socket.io client from backend so it works when page opened via file://
+        (function loadSocketIoClient() {
+            const script = document.createElement('script');
+            script.src = API_HOST.replace(/\/$/, '') + '/socket.io/socket.io.js';
+            script.async = false;
+            script.onload = () => console.log('socket.io client loaded from', script.src);
+            script.onerror = () => console.error('Failed to load socket.io client from', script.src);
+            document.head.appendChild(script);
+        })();
+
+        // Load PeerJS for video/audio calls
+        (function loadPeerJS() {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/peerjs@1.3.2/dist/peerjs.min.js';
+            script.async = false;
+            script.onload = () => console.log('PeerJS loaded');
+            script.onerror = () => console.error('Failed to load PeerJS');
+            document.head.appendChild(script);
+        })();
+
+        // If page is opened via file://, show banner that allows opening the app URL
+        (function showFileOpenBanner() {
+            const isFile = (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:');
+            if (!isFile) return;
+            const banner = document.getElementById('fileServeBanner');
+            if (!banner) return;
+            banner.style.display = 'flex';
+            const openBtn = document.getElementById('openLocalBtn');
+            const dismissBtn = document.getElementById('dismissFileBanner');
+            if (openBtn) openBtn.addEventListener('click', () => {
+                try {
+                    window.open(API_HOST, '_blank');
+                } catch (err) {
+                    window.location.href = API_HOST;
+                }
+            });
+            if (dismissBtn) dismissBtn.addEventListener('click', () => {
+                banner.style.display = 'none';
+            });
+        })();
+
+        // Kullanıcı durumu
+        let currentUser = null;
+
+        // Seviye etiketini belirle
+        function getLevelClass(level) {
+            switch (level) {
+                case 'beginner':
+                    return 'level-beginner';
+                case 'intermediate':
+                    return 'level-intermediate';
+                case 'advanced':
+                    return 'level-advanced';
+                default:
+                    return 'level-beginner';
+            }
+        }
+
+        // Seviye adını getir
+        function getLevelName(level) {
+            switch (level) {
+                case 'beginner':
+                    return 'Başlangıç';
+                case 'intermediate':
+                    return 'Orta';
+                case 'advanced':
+                    return 'İleri';
+                default:
+                    return 'Başlangıç';
+            }
+        }
+
+        // Oda card'ını HTML olarak render et
+        function createRoomCardHTML(room) {
+            const levelClass = getLevelClass(room.level);
+            const levelName = getLevelName(room.level);
+            // Owner hariç gerçek katılımcı sayısını hesapla
+            // API'den gelen room.members dizisi, o an odada bulunan kullanıcıları içerir
+            const totalMembers = room.members ? room.members.length : 0;
+            // Oda sahibi de members dizisinde olabilir, ancak card'da sadece diğer kişileri saymak mantıklı.
+            // Bu simülasyon/mock API'de sadece members.length kullanacağız.
+            const participantCount = totalMembers;
+            const displayText = participantCount === 0 ? 'Oda Boş' : `${participantCount} ${participantCount === 1 ? 'Kişi' : 'Kişi'}`;
+
+            // Oda dilinin bayrağını bul (Basit bir haritalama)
+            const languageMap = {
+                'english': '🇬🇧',
+                'spanish': '🇪🇸',
+                'french': '🇫🇷',
+                'german': '🇩🇪',
+                'japanese': '🇯🇵',
+                'chinese': '🇨🇳',
+                'russian': '🇷🇺',
+                'default': '🌍'
+            };
+            const langFlag = languageMap[room.language.toLowerCase()] || languageMap['default'];
+
+
+            return `
+                <div class="room-card" data-room-id="${room._id || room.id}" data-room-name="${room.name}" data-room-lang="${room.language}" data-room-level="${room.level}">
+                    <div class="room-header">
+                        <div>
+                            <div class="room-title">${room.name}</div>
+                            <div class="room-language"><i class="fas fa-language"></i> ${langFlag} ${room.language}</div>
+                        </div>
+                        <div class="room-level ${levelClass}"><span class="level-badge ${levelClass}">${levelName}</span></div>
+                    </div>
+                    <div class="room-body">
+                        <div class="room-topic">#${room.topic || 'pratik'}</div>
+                        <div class="room-info">
+                            <div class="room-users">
+                                <span class="user-count">${participantCount}</span>
+                                <span>${displayText}</span>
+                            </div>
+                            <div class="room-topic-count"><i class="far fa-comments"></i> 0 Konu</div>
+                        </div>
+                        <div class="room-description">
+                            ${room.description}
+                        </div>
+                        <div class="room-actions">
+                            <div class="btn-join"><i class="fas fa-microphone"></i> Katıl & Konuş</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // API'den odaları getir ve göster
+        async function loadAndRenderRooms() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/rooms`);
+                const data = await response.json();
+
+                if (data.data && data.data.rooms) {
+                    const roomsGrid = document.getElementById('roomsGrid');
+                    if (roomsGrid) {
+                        // Varolan odaları temizle
+                        roomsGrid.innerHTML = '';
+
+                        // Yeni odaları ekle
+                        data.data.rooms.forEach(room => {
+                            const roomHTML = createRoomCardHTML(room);
+                            roomsGrid.insertAdjacentHTML('beforeend', roomHTML);
+                        });
+
+                        // Join butonlarını yeniden bağla
+                        attachJoinButtonListeners();
+                    }
+                }
+            } catch (err) {
+                console.error('Rooms loading error:', err);
+                showToast('Odalar yüklenirken hata oluştu: ' + (err.message || 'Bilinmeyen Hata'), 'error');
+            }
+        }
+
+        // Oda View'ını aç
+        let currentRoom = null;
+        let peer = null; // PeerJS instance
+        let localStream = null; // Local MediaStream
+        let peers = {}; // { peerId: RTCPeerConnection }
+
+        async function openRoomView(room) {
+            // Önceki odayı temizle
+            if (currentRoom) await leaveRoom(false);
+
+            currentRoom = room;
+            const modal = document.getElementById('roomViewModal');
+
+            // Oda bilgisini doldur
+            document.getElementById('roomViewTitle').textContent = room.name;
+            document.getElementById('roomViewInfo').innerHTML = `
+                <span>${room.language} • ${room.level}</span>
+            `;
+
+            // Mesaj container'ını temizle
+            const messagesContainer = document.getElementById('messagesContainer');
+            messagesContainer.innerHTML = '<p style="text-align: center; color: var(--gray-color);">Sohbete başlamak için bir mesaj yazın...</p>';
+
+            // Üyeleri yükle
+            await loadRoomMembers(room.id);
+
+            // Socket'e oda katılma bildir
+            if (socket && socket.connected) {
+                socket.emit('join_room', {
+                    roomId: room.id,
+                    roomName: room.name,
+                    userId: currentUser._id, // User ID'yi de gönder
+                    userName: currentUser.name
+                });
+                console.log('Joined room:', room.name);
+            } else {
+                console.warn('Socket bağlı değil veya tanımlı değil.');
+                showToast('Sohbet sunucusuna bağlanılamadı.', 'error');
+            }
+
+            // Modal'ı aç
+            modal.style.display = 'flex';
+
+            // Video call'ı başlat
+            await initializeVideoCall(room.id);
+        }
+
+        // Video call'ı initialize et
+        async function initializeVideoCall(roomId) {
+            try {
+                // Local stream'i al
+                if (!localStream) {
+                    try {
+                        localStream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: 320,
+                                height: 240
+                            },
+                            audio: true
+                        });
+                        console.log('Local stream initialized');
+                    } catch (err) {
+                        console.error('getUserMedia error:', err);
+                        showToast('Kamera/mikrofon erişim reddedildi: ' + err.message, 'error');
+                        // Stream alınamadıysa, butonu kapalı göster
+                        const toggleAudioBtn = document.getElementById('toggleAudioBtn');
+                        const toggleVideoBtn = document.getElementById('toggleVideoBtn');
+                        if (toggleAudioBtn) {
+                            toggleAudioBtn.innerHTML = '<i class="fas fa-microphone-slash"></i> Ses Kapalı';
+                            toggleAudioBtn.style.backgroundColor = 'var(--danger-color)';
+                        }
+                        if (toggleVideoBtn) {
+                            toggleVideoBtn.innerHTML = '<i class="fas fa-video-slash"></i> Video Kapalı';
+                            toggleVideoBtn.style.backgroundColor = 'var(--danger-color)';
+                        }
+                        // Boş stream oluştur (ses/video kapalı olarak)
+                        localStream = new MediaStream();
+                    }
+                }
+
+                // Local video'yu göster
+                const localVideo = document.getElementById('localVideo');
+                if (localVideo) {
+                    localVideo.srcObject = localStream;
+                    localVideo.play();
+                }
+
+                // PeerJS'i başlat (kullanıcı ID'si ile)
+                if (typeof Peer !== 'undefined') {
+                    // PeerJS sunucu konfigürasyonu
+                    const peerConfig = {
+                        host: window.location.hostname === 'localhost' || API_HOST.includes('localhost') ? 'localhost' : window.location.hostname,
+                        // Port ve Path, PeerJS sunucusunun kurulu olduğu yere bağlıdır. 
+                        // Örnekte varsayımsal 4001 portu ve /peerjs yolu kullanılıyor.
+                        port: window.location.protocol === 'https:' ? 443 : 4001,
+                        path: '/peerjs'
+                    };
+
+                    peer = new Peer(currentUser._id, peerConfig);
+
+                    peer.on('open', (id) => {
+                        console.log('PeerJS ID:', id);
+                        // PeerJS'e bağlandıktan sonra diğer kullanıcılara sinyal gönder
+                        if (socket && socket.connected) {
+                            // Socket'e peer ID'yi bildir
+                            socket.emit('user_peer_id', {
+                                roomId: roomId,
+                                userId: currentUser._id,
+                                peerId: id,
+                                userName: currentUser.name
+                            });
+                        }
+                    });
+
+                    // Başka birinden çağrı gelirse
+                    peer.on('call', (call) => {
+                        // Çağrıyı kabul et ve stream'i gönder
+                        call.answer(localStream);
+
+                        call.on('stream', (remoteStream) => {
+                            console.log('Remote stream received');
+                            // Remote video elementini ekle (varsa)
+                            let remoteVideo = document.getElementById(`remote-${call.peer}`);
+                            if (!remoteVideo) {
+                                // Yeni bir video elementi oluştur ve ekle (PeerJS ID'si ile)
+                                // Not: call.peer, arayanın PeerJS ID'sidir. Gerçek kullanıcı ID'sini bulmak için map gerekebilir.
+                                remoteVideo = addRemoteVideo(call.peer, `Kullanıcı ${call.peer.substring(0, 4)}`); // Geçici isim
+                            }
+                            remoteVideo.srcObject = remoteStream;
+                            remoteVideo.play();
+
+                            // Peer'ı kaydet
+                            peers[call.peer] = call;
+                        });
+
+                        // Çağrı kapandığında
+                        call.on('close', () => {
+                            removeRemoteVideo(call.peer);
+                            delete peers[call.peer];
+                            showToast(`Kullanıcı ${call.peer} ayrıldı (Video)`, 'info');
+                        });
+
+                        call.on('error', (err) => {
+                            console.error('Call error:', err);
+                        });
+                    });
+
+                    // Hata yönetimi
+                    peer.on('error', (err) => {
+                        console.error('PeerJS error:', err.type, err);
+                        showToast(`Video bağlantı hatası: ${err.message}`, 'error');
+                    });
+
+                } else {
+                    console.error('PeerJS not loaded!');
+                    showToast('Video/ses için gerekli kütüphane yüklenemedi.', 'error');
+                }
+
+            } catch (err) {
+                console.error('initializeVideoCall error:', err);
+                showToast('Video başlatma hatası: ' + err.message, 'error');
+            }
+        }
+
+        // Sinyalleme sunucusundan gelen peer ID'ye göre diğer kullanıcıyı ara
+        function callOtherUser(peerId, userId, userName) {
+            if (!peer || !localStream || peer.disconnected) {
+                console.error('PeerJS is not ready or disconnected.');
+                // PeerJS hazır değilse tekrar denenmeli
+                // showToast('Video görüşmesi başlatılamadı, PeerJS hazır değil.', 'error');
+                return;
+            }
+            if (peerId === peer.id) return; // Kendimizi aramıyoruz
+
+            // Daha önce aranmış mı kontrol et
+            if (peers[peerId]) {
+                console.log(`Peer ${peerId} already connected.`);
+                return;
+            }
+
+            console.log(`Calling peer: ${peerId}`);
+            const call = peer.call(peerId, localStream);
+
+            call.on('stream', (remoteStream) => {
+                console.log('Remote stream received from called peer');
+                // Remote video elementini ekle
+                let remoteVideo = document.getElementById(`remote-${peerId}`);
+                if (!remoteVideo) {
+                    remoteVideo = addRemoteVideo(peerId, userName);
+                }
+                remoteVideo.srcObject = remoteStream;
+                remoteVideo.play();
+
+                // Peer'ı kaydet
+                peers[peerId] = call;
+            });
+
+            call.on('close', () => {
+                removeRemoteVideo(peerId);
+                delete peers[peerId];
+                showToast(`${userName} ayrıldı (Video)`, 'info');
+            });
+
+            call.on('error', (err) => {
+                console.error('Call error with peer', peerId, err);
+                showToast(`Video görüşmesi hatası: ${userName}`, 'error');
+                removeRemoteVideo(peerId);
+                delete peers[peerId];
+            });
+        }
+
+
+        // Remote video ekle
+        // Not: PeerJS'te call.peer ID'si kullanılır, bu nedenle bu fonksiyonu çağıranlar PeerID'yi userId olarak iletmelidir.
+        function addRemoteVideo(peerId, userName) {
+            const container = document.getElementById('remoteVideosContainer');
+
+            const videoDiv = document.createElement('div');
+            // PeerJS ID'sini kullan
+            videoDiv.id = `video-${peerId}`;
+            videoDiv.style.position = 'relative';
+            videoDiv.style.backgroundColor = '#000';
+            videoDiv.style.borderRadius = '8px';
+            videoDiv.style.aspectRatio = '16/9';
+            videoDiv.style.display = 'flex';
+            videoDiv.style.alignItems = 'center';
+            videoDiv.style.justifyContent = 'center';
+
+            const video = document.createElement('video');
+            video.id = `remote-${peerId}`;
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.borderRadius = '8px';
+            video.style.objectFit = 'cover';
+            video.autoplay = true;
+            video.playsinline = true; // iOS için önemli
+
+            const label = document.createElement('div');
+            label.style.position = 'absolute';
+            label.style.bottom = '5px';
+            label.style.left = '5px';
+            label.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            label.style.padding = '5px 10px';
+            label.style.borderRadius = '4px';
+            label.style.fontSize = '11px';
+            label.style.color = 'white';
+            label.textContent = userName;
+
+            videoDiv.appendChild(video);
+            videoDiv.appendChild(label);
+            container.appendChild(videoDiv);
+
+            return video;
+        }
+
+        // Remote video'yu kaldır
+        function removeRemoteVideo(peerId) {
+            const videoDiv = document.getElementById(`video-${peerId}`);
+            if (videoDiv) {
+                videoDiv.remove();
+            }
+        }
+
+        // Oda üyelerini yükle
+        async function loadRoomMembers(roomId) {
+            try {
+                const res = await fetch(`${API_BASE_URL}/rooms/${roomId}`);
+                const data = await res.json();
+
+                if (data.status === 'success' && data.data.room) {
+                    const room = data.data.room;
+                    const container = document.getElementById('roomMembersContainer');
+                    const countEl = document.getElementById('roomMemberCount');
+
+                    const memberCount = (room.members && Array.isArray(room.members)) ? room.members.length : 0;
+                    countEl.textContent = `${memberCount} üye`;
+
+                    if (memberCount === 0) {
+                        container.innerHTML = '<p style="text-align: center; color: var(--gray-color); padding: 20px;">Üye yok</p>';
+                        return;
+                    }
+
+                    // Üyeleri HTML olarak render et
+                    let html = '';
+                    (room.members || []).forEach(member => {
+                        // API'den gelen veriye göre uyarlama yapıldı
+                        const memberId = member._id || member.id;
+                        const memberName = member.name || 'Bilinmiyor';
+                        const initials = memberName.charAt(0).toUpperCase();
+                        const avatarColor = getAvatarColor(memberId);
+                        // Bu basit örnekte herkesin "Çevrimiçi" olduğunu varsayıyoruz
+                        const isOnline = true;
+
+                        html += `
+                            <div style="padding: 10px; margin-bottom: 8px; background-color: rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background-color: ${avatarColor}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
+                                    ${initials}
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="font-size: 12px; font-weight: 500;">${memberName} ${memberId === currentUser._id ? '(Siz)' : ''}</div>
+                                    <div style="font-size: 10px; color: ${isOnline ? 'var(--success-color)' : 'var(--gray-color)'};">
+                                        ${isOnline ? '🟢 Çevrimiçi' : '⚫ Çevrimdışı'}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    container.innerHTML = html;
+                }
+            } catch (err) {
+                console.error('Load room members error:', err);
+            }
+        }
+
+        // Mesaj gönder
+        async function sendMessage(text) {
+            if (!text.trim() || !currentRoom || !currentUser) return;
+
+            try {
+                // Socket ile mesaj gönder
+                if (socket && socket.connected) {
+                    socket.emit('send_message', {
+                        roomId: currentRoom.id,
+                        roomName: currentRoom.name,
+                        text: text,
+                        sender: {
+                            id: currentUser._id,
+                            name: currentUser.name
+                        }
+                    });
+                    console.log('Message sent:', text);
+                } else {
+                    showToast('Mesaj sunucuya gönderilemedi (Socket bağlı değil)', 'error');
+                }
+            } catch (err) {
+                console.error('Send message error:', err);
+                showToast('Mesaj gönderilemedi', 'error');
+            }
+        }
+
+        // Mesaj ekle (chat'te göster)
+        function addMessageToChat(message) {
+            const container = document.getElementById('messagesContainer');
+
+            // İlk "başlamak için" mesajını kaldır
+            const placeholder = container.querySelector('p');
+            if (placeholder) {
+                placeholder.remove();
+            }
+
+            const isCurrentUser = currentUser && message.sender.id === currentUser._id;
+            const messageHTML = `
+                <div style="margin-bottom: 15px; ${isCurrentUser ? 'text-align: right;' : ''}">
+                    <div style="display: inline-block; max-width: 70%; ${isCurrentUser ? 'background-color: var(--primary-color);' : 'background-color: rgba(255,255,255,0.1);'} padding: 10px 15px; border-radius: 8px; word-break: break-word;">
+                        <div style="font-size: 11px; color: var(--accent-color); margin-bottom: 5px;">
+                            ${message.sender.name}
+                        </div>
+                        <div>${message.text}</div>
+                        <div style="font-size: 10px; color: var(--gray-color); margin-top: 5px; text-align: ${isCurrentUser ? 'right' : 'left'};">
+                            ${new Date().toLocaleTimeString('tr-TR')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', messageHTML);
+
+            // En son mesaja scroll et
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Oda'dan ayrıl
+        async function leaveRoom(shouldHideModal = true) {
+            if (!currentRoom || !currentUser) return;
+
+            try {
+                // Önce API'ye ayrılma isteği gönder (database'den çıkart)
+                const token = localStorage.getItem('token');
+                if (token && currentRoom.id) {
+                    const res = await fetch(`${API_BASE_URL}/rooms/${currentRoom.id}/leave`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!res.ok) {
+                        console.error('Leave room API error');
+                    }
+                }
+
+                // Socket'e bildir
+                if (socket) {
+                    socket.emit('leave_room', {
+                        roomId: currentRoom.id,
+                        roomName: currentRoom.name,
+                        userId: currentUser._id
+                    });
+                }
+
+                // PeerJS bağlantılarını kapat
+                if (peer) {
+                    // Diğer peer'lara bağlantıyı kapatma sinyali gönder
+                    Object.values(peers).forEach(call => {
+                        call.close();
+                    });
+                    peers = {};
+                    peer.destroy();
+                    peer = null;
+                }
+
+                // Local stream'i durdur
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop());
+                    localStream = null;
+                }
+
+                // Remote videoları temizle
+                document.getElementById('remoteVideosContainer').innerHTML = '';
+                // Local video'yu da temizle
+                const localVideo = document.getElementById('localVideo');
+                if (localVideo) localVideo.srcObject = null;
+
+                // Kontrolleri sıfırla
+                const toggleAudioBtn = document.getElementById('toggleAudioBtn');
+                const toggleVideoBtn = document.getElementById('toggleVideoBtn');
+                if (toggleAudioBtn) {
+                    toggleAudioBtn.innerHTML = '<i class="fas fa-microphone"></i> Ses Aç';
+                    toggleAudioBtn.style.backgroundColor = 'var(--primary-color)';
+                }
+                if (toggleVideoBtn) {
+                    toggleVideoBtn.innerHTML = '<i class="fas fa-video"></i> Video Aç';
+                    toggleVideoBtn.style.backgroundColor = 'var(--primary-color)';
+                }
+
+
+                const roomName = currentRoom.name;
+                currentRoom = null;
+
+                if (shouldHideModal) {
+                    document.getElementById('roomViewModal').style.display = 'none';
+                    showToast(`Odadan ayrıldınız: ${roomName}`, 'success');
+                }
+                // Oda listesini ve üyeleri güncelle
+                await loadAndRenderRooms();
+            } catch (err) {
+                console.error('Leave room error:', err);
+            }
+        }
+
+        // Aktif kullanıcılar listesini güncelle
+        function updateActiveUsersList(users) {
+            const usersList = document.getElementById('activeUsersList');
+            if (!usersList) return;
+
+            // Kendimizi listeden çıkar
+            const filteredUsers = users.filter(user => currentUser && user.id !== currentUser._id);
+
+            if (!filteredUsers || filteredUsers.length === 0) {
+                usersList.innerHTML = '<p style="color: var(--gray-color); padding: 20px; text-align: center;">Şu an çevrimiçi kullanıcı yok</p>';
+                return;
+            }
+
+            // Kullanıcı kartlarını HTML olarak oluştur
+            let html = '';
+            filteredUsers.forEach(user => {
+                const initials = (user.name || 'U').charAt(0).toUpperCase();
+                const avatarColor = getAvatarColor(user.id);
+                // languages alanı yoksa boş bırak
+                const languagesText = user.languages && Array.isArray(user.languages) ? user.languages.join(', ') : 'Dil Bilgisi Yok';
+
+                html += `
+                    <div class="user-card">
+                        <div class="user-avatar" style="background-color: ${avatarColor};">${initials}</div>
+                        <div class="user-info">
+                            <div class="user-name">${user.name || 'Anonim'}</div>
+                            <div class="user-languages" style="color: var(--accent-color); font-size: 12px;">${languagesText}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            usersList.innerHTML = html;
+        }
+
+        // Kullanıcı ID'sine dayalı tutarlı renk döndür
+        function getAvatarColor(userId) {
+            const colors = [
+                '#4361ee', '#3a0ca3', '#4cc9f0', '#06d6a0',
+                '#ffd166', '#ef476f', '#a23b72', '#f18f01'
+            ];
+            // userId'nin hash'ini alarak bir renk seç
+            let hash = 0;
+            if (!userId) return colors[0]; // fallback
+            for (let i = 0; i < userId.length; i++) {
+                hash = userId.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+        // Socket.io client will be created after we know token
+        let socket = null;
+
+        function connectSocket(token) {
+            try {
+                // io global'ı kontrol et
+                if (typeof io === 'undefined') {
+                    console.error('socket.io client not loaded yet, retrying...');
+                    setTimeout(() => connectSocket(token), 500);
+                    return;
+                }
+
+                if (socket) {
+                    socket.disconnect();
+                    socket = null;
+                }
+
+                const auth = token ? {
+                    token
+                } : {};
+                // Ensure socket connects to the API host (use API_HOST, not file://)
+                const socketUrl = (typeof API_HOST !== 'undefined' ? API_HOST.replace(/\/$/, '') : (window.location.origin || 'http://localhost:4000'));
+                // Pass auth via auth option; explicitly set path to socket.io endpoint
+                socket = io(socketUrl, {
+                    auth,
+                    path: '/socket.io'
+                });
+
+                socket.on('connect', () => {
+                    console.log('Socket connected', socket.id);
+                    const statusEl = document.getElementById('socketStatus');
+                    if (statusEl) statusEl.style.display = 'inline';
+                    // Bağlandıktan sonra aktif kullanıcı listesini çekme isteği gönder
+                    socket.emit('request_active_users');
+                });
+
+                socket.on('connect_error', (err) => {
+                    console.error('Socket connection error:', err && err.message ? err.message : err);
+                    const statusEl = document.getElementById('socketStatus');
+                    if (statusEl) statusEl.style.display = 'none';
+                });
+
+                socket.on('welcome', (payload) => {
+                    console.log('Socket welcome:', payload);
+                    if (payload && payload.user) {
+                        console.log('Socket authenticated as:', payload.user.email);
+                    }
+                });
+
+                // Aktif kullanıcılar event'ini dinle
+                socket.on('active_users', (payload) => {
+                    console.log('Active users update:', payload);
+                    updateActiveUsersList(payload.users || []);
+                });
+
+                socket.on('disconnect', () => {
+                    console.log('Socket disconnected');
+                    const statusEl = document.getElementById('socketStatus');
+                    if (statusEl) statusEl.style.display = 'none';
+                    updateActiveUsersList([]);
+                });
+
+                // Oda event'leri
+                socket.on('user_joined', (data) => {
+                    console.log('User joined room:', data);
+                    // Her zaman oda listesini güncelle (başka tarayıcıda birisi katıldığında da görsün)
+                    loadAndRenderRooms();
+
+                    if (currentRoom && currentRoom.id === data.roomId) {
+                        showToast(`${data.user.name} odaya katıldı`, 'info');
+                        loadRoomMembers(currentRoom.id);
+                    }
+                });
+
+                socket.on('user_left', (data) => {
+                    console.log('User left room:', data);
+                    // Her zaman oda listesini güncelle
+                    loadAndRenderRooms();
+                    removeRemoteVideo(data.user.id); // Video bağlantısını da kapat
+
+                    if (currentRoom && currentRoom.id === data.roomId) {
+                        showToast(`${data.user.name} odadan ayrıldı`, 'info');
+                        loadRoomMembers(currentRoom.id);
+
+                        // Peer bağlantısını da kapat
+                        // Not: Peerjs'te peerId, userId yerine kullanılır
+                        if (peers[data.user.id]) {
+                            peers[data.user.id].close();
+                            delete peers[data.user.id];
+                        }
+                    }
+                });
+
+                socket.on('receive_message', (message) => {
+                    console.log('Message received:', message);
+                    if (currentRoom && currentRoom.id === message.roomId) {
+                        addMessageToChat(message);
+                    }
+                });
+
+                // Diğer kullanıcı Peer ID'sini gönderdiğinde
+                socket.on('user_peer_id', (data) => {
+                    console.log('User Peer ID received:', data);
+                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                        // Yeni katılan kullanıcıyı ara
+                        callOtherUser(data.peerId, data.userId, data.userName);
+                    }
+                });
+
+                // Video events
+                socket.on('user_video_enabled', (data) => {
+                    console.log('User video enabled:', data);
+                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                        // Ekrana video ekle (simülasyon - gerçek video P2P ile)
+                        if (!document.getElementById(`video-${data.userId}`)) {
+                            addRemoteVideo(data.userId, data.userName);
+                        }
+                        showToast(`${data.userName} videosunu açtı`, 'info');
+                    }
+                });
+
+                socket.on('user_video_disabled', (data) => {
+                    console.log('User video disabled:', data);
+                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                        removeRemoteVideo(data.userId);
+                        showToast(`${data.userName} videosunu kapattı`, 'info');
+                    }
+                });
+
+                socket.on('user_audio_enabled', (data) => {
+                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                        showToast(`${data.userName} sesini açtı`, 'info');
+                    }
+                });
+
+                socket.on('user_audio_disabled', (data) => {
+                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                        showToast(`${data.userName} sesini kapattı`, 'info');
+                    }
+                });
+
+
+            } catch (err) {
+                console.error('connectSocket error', err);
+            }
+        }
+
+        // Modal işlevselliği
+        // Simple toast helper for user-facing messages
+        // Accepts either a string or a localized object like { tr: '...', en: '...' }
+        function getCurrentLocale() {
+            try {
+                const stored = localStorage.getItem('locale');
+                if (stored) return stored;
+                const nav = navigator.language || navigator.userLanguage || 'en';
+                return nav.toLowerCase().startsWith('tr') ? 'tr' : 'en';
+            } catch (e) {
+                return 'en';
+            }
+        }
+
+        function showToast(message, type = 'info', opts = {}) {
+            try {
+                const container = document.getElementById('toastContainer');
+                if (!container) return console.warn('Toast container missing');
+
+                // Resolve localized message if object provided
+                let text = '';
+                if (message && typeof message === 'object') {
+                    const locale = getCurrentLocale();
+                    text = message[locale] || message.en || message.tr || JSON.stringify(message);
+                } else {
+                    text = String(message == null ? '' : message);
+                }
+
+                const toast = document.createElement('div');
+                toast.className = 'toast ' + type;
+                toast.style.minWidth = '220px';
+                toast.style.maxWidth = '420px';
+                toast.style.background = (type === 'error') ? '#fffbfb' : (type === 'success' ? '#f6fffa' : '#ffffff');
+                toast.style.color = '#111';
+                toast.style.padding = '10px 12px';
+                toast.style.border = '1px solid rgba(0,0,0,0.06)';
+                toast.style.borderLeft = (type === 'error') ? '4px solid #e85c5c' : (type === 'success' ? '4px solid #27ae60' : '4px solid #4f46e5');
+                toast.style.boxShadow = '0 6px 18px rgba(0,0,0,0.06)';
+                toast.style.borderRadius = '8px';
+                toast.style.fontSize = '14px';
+                toast.style.lineHeight = '1.35';
+                toast.style.whiteSpace = 'pre-wrap';
+                toast.textContent = text;
+
+                container.appendChild(toast);
+
+                const ttl = (opts && opts.ttl) || 4200;
+                setTimeout(() => {
+                    try {
+                        toast.style.transition = 'opacity 220ms';
+                        toast.style.opacity = 0;
+                    } catch (e) {}
+                    setTimeout(() => {
+                        try {
+                            container.removeChild(toast);
+                        } catch (e) {}
+                    }, 260);
+                }, ttl);
+            } catch (e) {
+                console.error('showToast error', e);
+            }
+        }
+        const authModal = document.getElementById('authModal');
+        const createRoomModal = document.getElementById('createRoomModal');
+        const roomViewModal = document.getElementById('roomViewModal'); // Eksik olan ekle
+        const closeModals = document.querySelectorAll('.close-modal');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const createRoomForm = document.getElementById('createRoomForm');
+
+        // Butonlar
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const createRoomBtn = document.getElementById('createRoomBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // Kullanıcı arayüz elemanları
+        const guestActions = document.getElementById('guestActions');
+        const userProfile = document.getElementById('userProfile');
+        const userDisplayName = document.getElementById('userDisplayName');
+        const userAvatar = document.getElementById('userAvatar');
+
+        // Auth tab'ları
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const switchToRegister = document.getElementById('switchToRegister');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const authModalTitle = document.getElementById('authModalTitle');
+
+        // Giriş butonuna tıklama
+        loginBtn.addEventListener('click', () => {
+            showAuthModal('login');
+        });
+
+        // Kayıt butonuna tıklama
+        registerBtn.addEventListener('click', () => {
+            showAuthModal('register');
+        });
+
+        // Oda oluşturma modalını aç
+        createRoomBtn.addEventListener('click', () => {
+            if (!currentUser) {
+                showToast('Oda oluşturmak için giriş yapmalısınız!', 'info');
+                showAuthModal('login');
+                return;
+            }
+            createRoomModal.style.display = 'flex';
+        });
+
+        // Modalı kapat
+        closeModals.forEach(closeBtn => {
+            // data-modal attribute'ünü kullanarak hangi modalın kapatılacağını belirle
+            closeBtn.addEventListener('click', (e) => {
+                const modalId = e.target.getAttribute('data-modal');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    if (modalId === 'roomViewModal') {
+                        // Oda görünümünü kapatmadan önce odayı terk et
+                        leaveRoom();
+                    } else {
+                        modal.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+
+        // Modal dışına tıklayınca kapat
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                const modal = e.target;
+                if (modal.id === 'roomViewModal') {
+                    // Oda görünümünü kapatmadan önce odayı terk et
+                    leaveRoom();
+                } else {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+
+        // Auth tab'larını değiştirme
+        loginTab.addEventListener('click', () => switchAuthTab('login'));
+        registerTab.addEventListener('click', () => switchAuthTab('register'));
+        switchToRegister.addEventListener('click', () => switchAuthTab('register'));
+        switchToLogin.addEventListener('click', () => switchAuthTab('login'));
+
+        // Room View Butonları
+        const messageInput = document.getElementById('messageInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const leaveRoomBtn = document.getElementById('leaveRoomBtn');
+        const closeRoomViewBtn = document.getElementById('closeRoomView');
+        const toggleAudioBtn = document.getElementById('toggleAudioBtn');
+        const toggleVideoBtn = document.getElementById('toggleVideoBtn');
+
+        // Mesaj gönder
+        if (sendMessageBtn) {
+            sendMessageBtn.addEventListener('click', () => {
+                const text = messageInput.value;
+                if (text.trim()) {
+                    sendMessage(text);
+                    messageInput.value = '';
+                    messageInput.focus();
+                }
+            });
+        }
+
+        // Mesaj input'unda Enter tuşu
+        if (messageInput) {
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Enter tuşunun default action'ını engelle
+                    const text = messageInput.value;
+                    if (text.trim()) {
+                        sendMessage(text);
+                        messageInput.value = '';
+                    }
+                }
+            });
+        }
+
+        // Odadan ayrıl
+        if (leaveRoomBtn) {
+            leaveRoomBtn.addEventListener('click', () => {
+                leaveRoom();
+            });
+        }
+
+        // Modal'ı kapat (room view)
+        if (closeRoomViewBtn) {
+            closeRoomViewBtn.addEventListener('click', () => {
+                leaveRoom();
+            });
+        }
+
+        // Ses aç/kapat
+        if (toggleAudioBtn) {
+            toggleAudioBtn.addEventListener('click', () => {
+                if (!localStream) {
+                    showToast('Mikrofon başlatılmadı', 'error');
+                    return;
+                }
+
+                const audioTracks = localStream.getAudioTracks();
+                if (audioTracks.length === 0) {
+                    showToast('Ses aygıtı bulunamadı', 'error');
+                    return;
+                }
+
+                const isCurrentlyEnabled = audioTracks[0].enabled;
+
+                audioTracks.forEach(track => {
+                    track.enabled = !isCurrentlyEnabled;
+                });
+
+                const isNowEnabled = !isCurrentlyEnabled;
+                toggleAudioBtn.style.backgroundColor = isNowEnabled ? 'var(--success-color)' : 'var(--primary-color)';
+                toggleAudioBtn.innerHTML = isNowEnabled ? '<i class="fas fa-microphone"></i> Ses Aç' : '<i class="fas fa-microphone-slash"></i> Ses Kapat';
+                showToast(isNowEnabled ? '🎤 Ses açıldı' : '🔇 Ses kapatıldı', 'info');
+
+                // Socket'e bildir
+                if (socket && currentRoom) {
+                    socket.emit(isNowEnabled ? 'user_audio_enabled' : 'user_audio_disabled', {
+                        roomId: currentRoom.id,
+                        userId: currentUser._id,
+                        userName: currentUser.name
+                    });
+                }
+            });
+        }
+
+        // Video aç/kapat
+        if (toggleVideoBtn) {
+            toggleVideoBtn.addEventListener('click', () => {
+                if (!localStream) {
+                    showToast('Video başlatılmadı', 'error');
+                    return;
+                }
+
+                const videoTracks = localStream.getVideoTracks();
+                if (videoTracks.length === 0) {
+                    showToast('Video aygıtı bulunamadı', 'error');
+                    return;
+                }
+
+                const isCurrentlyEnabled = videoTracks[0].enabled;
+
+                videoTracks.forEach(track => {
+                    track.enabled = !isCurrentlyEnabled;
+                });
+
+                const isNowEnabled = !isCurrentlyEnabled;
+                toggleVideoBtn.style.backgroundColor = isNowEnabled ? 'var(--success-color)' : 'var(--primary-color)';
+                toggleVideoBtn.innerHTML = isNowEnabled ? '<i class="fas fa-video"></i> Video Aç' : '<i class="fas fa-video-slash"></i> Video Kapat';
+                showToast(isNowEnabled ? '📹 Video açıldı' : '📹 Video kapatıldı', 'info');
+
+                // Socket'e bildir
+                if (socket && currentRoom) {
+                    socket.emit(isNowEnabled ? 'user_video_enabled' : 'user_video_disabled', {
+                        roomId: currentRoom.id,
+                        userId: currentUser._id,
+                        userName: currentUser.name
+                    });
+                }
+            });
+        }
+
+        // Login using the backend API
+        loginForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showToast('Lütfen tüm alanları doldurun!', 'error');
+                return;
+            }
+
+            try {
+                const res = await loginUser(email, password);
+                // store token is handled in loginUser
+                await fetchCurrentUser();
+                updateUIAfterAuth();
+                connectSocket(localStorage.getItem('token'));
+                authModal.style.display = 'none';
+                loginForm.reset();
+                // Oda listesini ve üyeleri güncelle
+                await loadAndRenderRooms();
+                showToast(res.message || 'Giriş başarılı!', 'success');
+            } catch (err) {
+                console.error('Login error', err);
+                showToast(err.message || 'Giriş başarısız.', 'error');
+            }
+        });
+
+        // Register using the backend API
+        registerForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            const languages = Array.from(document.getElementById('registerLanguages').selectedOptions).map(o => o.value);
+
+            if (!name || !email || !password || !confirmPassword) {
+                showToast('Lütfen tüm alanları doldurun!', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast('Şifreler eşleşmiyor!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showToast('Şifre en az 6 karakter olmalıdır!', 'error');
+                return;
+            }
+
+            try {
+                const res = await registerUser({
+                    name,
+                    email,
+                    password,
+                    confirmPassword,
+                    languages
+                });
+                // on success store token and load profile
+                if (res && res.token) {
+                    localStorage.setItem('token', res.token);
+                }
+                await fetchCurrentUser();
+                updateUIAfterAuth();
+                connectSocket(localStorage.getItem('token'));
+                authModal.style.display = 'none';
+                registerForm.reset();
+                // Oda listesini ve üyeleri güncelle
+                await loadAndRenderRooms();
+                showToast(res.message || 'Kayıt başarılı! Hoş geldiniz.', 'success');
+            } catch (err) {
+                console.error('Register error', err);
+                showToast(err.message || 'Kayıt başarısız.', 'error');
+            }
+        });
+
+        // Oda oluşturma formu
+        createRoomForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            const roomName = document.getElementById('roomName').value;
+            const roomLanguage = document.getElementById('roomLanguage').value;
+            const roomLevel = document.getElementById('roomLevel').value;
+            const roomTopic = document.getElementById('roomTopic').value;
+            const roomDescription = document.getElementById('roomDescription').value;
+
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    showToast('Giriş yapmalısınız!', 'info');
+                    return;
+                }
+
+                const res = await fetch(`${API_BASE_URL}/rooms`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        name: roomName,
+                        language: roomLanguage,
+                        level: roomLevel,
+                        topic: roomTopic,
+                        description: roomDescription
+                    })
+                });
+
+                let data;
+                try {
+                    data = await res.json();
+                } catch (e) {
+                    console.error('Room create response parse error:', e);
+                    showToast('Sunucu hatası: Geçersiz yanıt', 'error');
+                    return;
+                }
+
+                if (!res.ok || (data.status && data.status !== 'success')) {
+                    showToast((data && (data.error || data.message)) || 'Oda oluşturma başarısız', 'error');
+                    return;
+                }
+
+                showToast(`Oda başarıyla oluşturuldu: ${roomName}`, 'success');
+                createRoomForm.reset();
+                createRoomModal.style.display = 'none';
+                console.log('Room created:', data);
+                // Odaları yeniden yükle ve göster
+                await loadAndRenderRooms();
+            } catch (err) {
+                console.error('Room create error:', err);
+                showToast('Oda oluşturma hatası: ' + (err.message || 'Bilinmeyen hata'), 'error');
+            }
+        });
+
+        // Çıkış butonu
+        logoutBtn.addEventListener('click', () => {
+            // Aktif odadan ayrılmayı dene
+            if (currentRoom) {
+                leaveRoom(false); // Modal'ı gizleme işini manuel yap
+            }
+
+            currentUser = null;
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+
+            // Socket bağlantısını kapat
+            if (socket) {
+                try {
+                    socket.disconnect();
+                } catch (e) { /* ignore */ }
+                socket = null;
+            }
+
+            // Peer bağlantılarını temizle
+            if (peer) {
+                try {
+                    peer.destroy();
+                } catch (e) { /* ignore */ }
+                peer = null;
+            }
+
+            // UI'ı güncelle
+            guestActions.style.display = 'flex';
+            userProfile.style.display = 'none';
+            // Oda listesini ve aktif kullanıcıları yeniden yükle
+            loadAndRenderRooms();
+            updateActiveUsersList([]);
+
+            showToast('Başarıyla çıkış yaptınız!', 'success');
+        });
+
+        // Dil seçimi
+        const languageItems = document.querySelectorAll('.language-item');
+        languageItems.forEach(item => {
+            item.addEventListener('click', () => {
+                languageItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                // Filter logic will go here
+            });
+        });
+
+        // Seviye seçimi
+        const levelItems = document.querySelectorAll('.level-item');
+        levelItems.forEach(item => {
+            item.addEventListener('click', () => {
+                levelItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                // Filter logic will go here
+            });
+        });
+
+        // Odaya katılma butonlarını bağla (dinamik)
+        function attachJoinButtonListeners() {
+            const joinButtons = document.querySelectorAll('.btn-join');
+            joinButtons.forEach(button => {
+                // Her seferinde remove ve add, dinamik yüklenen elementler için önemlidir
+                button.removeEventListener('click', handleJoinClick);
+                button.addEventListener('click', handleJoinClick);
+            });
+        }
+
+        // Katılma butonu click handler'ı
+        async function handleJoinClick(e) {
+            if (!currentUser) {
+                showToast('Odaya katılmak için giriş yapmalısınız!', 'info');
+                showAuthModal('login');
+                return;
+            }
+
+            const roomCard = e.currentTarget.closest('.room-card');
+            const roomId = roomCard.getAttribute('data-room-id');
+            const roomTitle = roomCard.getAttribute('data-room-name');
+            const roomLanguage = roomCard.getAttribute('data-room-lang');
+            const roomLevel = roomCard.getAttribute('data-room-level');
+            const roomDescription = roomCard.querySelector('.room-description') ? roomCard.querySelector('.room-description').textContent : '';
+
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    showToast('Oturum süresi doldu. Lütfen tekrar giriş yapın.', 'error');
+                    return;
+                }
+
+                if (roomId) {
+                    // 1. API'ye odaya katılma isteği gönder (database'e ekle)
+                    const res = await fetch(`${API_BASE_URL}/rooms/${roomId}/join`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    let data = null;
+                    try {
+                        data = await res.json();
+                    } catch (e) {}
+
+                    if (!res.ok) {
+                        // HATA DÜZELTME BÖLGESİ (Ln 2241 ve 2244'e karşılık gelir)
+                        // Karmaşık optional chaining ve ternary ifadeleri yerine daha temiz bir kontrol yapısı kullanıldı.
+                        const isAlreadyMember = data && (data.error === 'Zaten üye' ||
+                            (data.message && ((typeof data.message.tr === 'string' && data.message.tr.includes('Zaten')) ||
+                                (typeof data.message.en === 'string' && data.message.en.includes('Already')))));
+
+                        if (isAlreadyMember) {
+                            // Başarılı say ve odayı açma adımına geç
+                        } else {
+                            // Ln 2255'teki hatanın olası nedeni olan optional chaining kaldırıldı.
+                            showToast((data && (data.error || data.message)) || 'Katılma hatası', 'error');
+                            return;
+                        }
+                    }
+
+                    // 2. Başarılı ise modalı aç
+                    openRoomView({
+                        id: roomId,
+                        name: roomTitle,
+                        language: roomLanguage,
+                        level: roomLevel,
+                        description: roomDescription
+                    });
+
+                    // Odalar listesini güncelle (üye sayısını yansıtması için)
+                    await loadAndRenderRooms();
+
+                } else {
+                    showToast('Bu oda için bilgi alınamadı', 'error');
+                }
+            } catch (err) {
+                console.error('Room join error:', err);
+                showToast('Oda katılma hatası: ' + (err.message || 'Bilinmeyen hata'), 'error');
+            }
+        }
+
+        // İlk katılma butonlarını bağla
+        attachJoinButtonListeners();
+
+        // Yardımcı fonksiyonlar
+        function showAuthModal(tab) {
+            authModal.style.display = 'flex';
+            switchAuthTab(tab);
+        }
+
+        function switchAuthTab(tab) {
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                authModalTitle.textContent = 'Giriş Yap';
+            } else {
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+                authModalTitle.textContent = 'Kayıt Ol';
+            }
+        }
+
+        function updateUIAfterAuth() {
+            // Kontrol et: guestActions ve userProfile null olmamalı
+            if (guestActions) guestActions.style.display = 'flex';
+            if (userProfile) userProfile.style.display = 'none';
+
+            if (currentUser) {
+                if (userDisplayName) userDisplayName.textContent = currentUser.name || 'Kullanıcı';
+                if (userAvatar) userAvatar.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+            }
+        }
+
+        // Get user profile using token
+        async function fetchCurrentUser() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                currentUser = null;
+                localStorage.removeItem('user');
+                return null;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (!res.ok) {
+                    // token invalid/expired
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    currentUser = null;
+                    return null;
+                }
+
+                let json;
+                try {
+                    json = await res.json();
+                } catch (e) {
+                    console.error('Failed to parse /auth/me response:', e);
+                    return null;
+                }
+
+                if (json && json.status === 'success' && json.data && json.data.user) {
+                    currentUser = json.data.user;
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    return currentUser;
+                }
+            } catch (err) {
+                console.error('fetchCurrentUser error', err);
+            }
+            return null;
+        }
+
+        // Perform an API login and store token
+        async function loginUser(email, password) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    console.error('Response parse error:', e, 'Response status:', response.status);
+                    throw new Error(`Sunucu hatası (HTTP ${response.status}): Geçersiz yanıt`);
+                }
+
+                if (!response.ok || data.status !== 'success') {
+                    const msg = formatApiError(data, response);
+                    throw new Error(msg || 'Giriş başarısız');
+                }
+                // store token
+                if (data.token) localStorage.setItem('token', data.token);
+                if (data.data && data.data.user) localStorage.setItem('user', JSON.stringify(data.data.user));
+                return data;
+            } catch (err) {
+                console.error('loginUser error:', err);
+                throw err;
+            }
+        }
+
+        // Perform an API register
+        async function registerUser(payload) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    console.error('Response parse error:', e, 'Response status:', response.status);
+                    throw new Error(`Sunucu hatası (HTTP ${response.status}): Geçersiz yanıt`);
+                }
+
+                if (!response.ok || (data.status && data.status !== 'success')) {
+                    const msg = formatApiError(data, response);
+                    throw new Error(msg || `Kayıt başarısız (status ${response.status})`);
+                }
+                // store token if provided
+                if (data.token) localStorage.setItem('token', data.token);
+                if (data.data && data.data.user) localStorage.setItem('user', JSON.stringify(data.data.user));
+                return data;
+            } catch (err) {
+                console.error('registerUser error:', err);
+                throw err;
+            }
+        }
+
+        // Format API error payloads into a readable string
+        function formatApiError(data, response) {
+            if (!data) return `HTTP ${response.status}`;
+            // If API returns localized error object like { error: { tr, en } }
+            if (data.error && typeof data.error === 'object' && (data.error.tr || data.error.en)) {
+                const locale = getCurrentLocale();
+                return data.error[locale] || data.error.en || data.error.tr || JSON.stringify(data.error);
+            }
+            // Common shapes: { error: 'msg' } | { message: 'msg' } | { errors: { field: ['msg'] } }
+            if (typeof data === 'string') return data;
+            if (data.error && typeof data.error === 'string') return data.error;
+            if (data.message && typeof data.message === 'string') return data.message;
+            if (data.error && typeof data.error === 'object') {
+                try {
+                    // Try to extract nested messages
+                    if (Array.isArray(data.error)) return data.error.join(', ');
+                    return Object.values(data.error).flat().join('; ');
+                } catch (e) {
+                    return JSON.stringify(data.error);
+                }
+            }
+            if (data.errors && typeof data.errors === 'object') {
+                try {
+                    return Object.values(data.errors).flat().join('; ');
+                } catch (e) {
+                    return JSON.stringify(data.errors);
+                }
+            }
+            // fallback: stringify
+            try {
+                return JSON.stringify(data);
+            } catch (e) {
+                return String(data);
+            }
+        }
+
+        // Sayfa yüklendiğinde kontrol et — eğer token varsa profil alın
+        window.addEventListener('DOMContentLoaded', async() => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                await fetchCurrentUser();
+                if (currentUser) {
+                    updateUIAfterAuth();
+                    connectSocket(token);
+                } else {
+                    // Token geçersizse UI'ı misafir moduna getir
+                    if (guestActions) guestActions.style.display = 'flex';
+                    if (userProfile) userProfile.style.display = 'none';
+                }
+            } else {
+                // Token yoksa UI'ı misafir moduna getir
+                if (guestActions) guestActions.style.display = 'flex';
+                if (userProfile) userProfile.style.display = 'none';
+            }
+
+            // Sayfa yüklenmesinde odaları getir ve göster
+            await loadAndRenderRooms();
+        });
+    </script>
+</body>
+
+</html>

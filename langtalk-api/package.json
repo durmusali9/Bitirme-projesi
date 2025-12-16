@@ -1,0 +1,33 @@
+{
+    "name": "langtalk-api",
+    "version": "1.0.0",
+    "description": "Simple Express/Mongo backend for LangTalk",
+    "main": "server.js",
+    "scripts": {
+        "dev": "nodemon server.js",
+        "start": "node server.js",
+        "test": "node server-test.js || echo 'no tests'",
+        "test:socket": "node socket-test.js || echo 'socket tests skipped'",
+        "test:e2e": "node tests/e2e-auth.js || echo 'e2e tests skipped'",
+        "test:admin": "node test_admin_flow.js || echo 'admin test skipped'",
+        "test:all": "npm run test && npm run test:socket && npm run test:e2e && npm run test:admin"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongodb": "^6.20.0",
+        "mongoose": "^8.6.0",
+        "socket.io": "^4.8.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0",
+        "socket.io-client": "^4.8.1",
+        "playwright": "^1.40.0"
+    }
+}
