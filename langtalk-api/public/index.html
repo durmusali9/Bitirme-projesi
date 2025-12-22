@@ -67,8 +67,6 @@
             font-size: 26px;
             background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
             -webkit-background-clip: text;
-            /* Düzeltme: Uyum için standart property eklendi */
-            background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
         }
@@ -132,6 +130,10 @@
             justify-content: center;
             font-weight: bold;
             font-size: 18px;
+        }
+        
+        .user-name {
+            font-weight: 600;
         }
         /* Language Level Badge */
         
@@ -299,6 +301,8 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
         }
         
         .room-body {
@@ -335,6 +339,7 @@
             background-color: rgba(255, 255, 255, 0.1);
             padding: 5px 12px;
             border-radius: 20px;
+            color: whitesmoke;
             font-size: 12px;
             font-weight: 600;
         }
@@ -495,10 +500,10 @@
         .form-control {
             width: 100%;
             padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgb(11, 11, 11, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 6px;
-            color: white;
+            color: #f8f9fa;
             font-size: 16px;
         }
         
@@ -596,6 +601,168 @@
                 justify-content: center;
             }
         }
+        /* --- ZOOM TARZI ROOM VIEW CSS --- */
+        
+        #roomViewModal {
+            background-color: #000;
+        }
+        
+        #roomViewModal .modal-content {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: #1a1a1a;
+            position: relative;
+        }
+        
+        .zoom-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 25px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .zoom-main-area {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            padding-top: 60px;
+            padding-bottom: 80px;
+        }
+        
+        .zoom-video-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            align-content: center;
+            justify-content: center;
+        }
+        
+        .zoom-video-card {
+            background: #2a2a2a;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .zoom-video-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .zoom-video-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            backdrop-filter: blur(4px);
+        }
+        /* Sidebar Sohbet & Üyeler */
+        
+        .zoom-sidebar {
+            width: 320px;
+            background: #242424;
+            border-left: 1px solid #333;
+            display: none;
+            /* JS ile açılacak */
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        
+        .zoom-sidebar.active {
+            display: flex;
+        }
+        
+        .zoom-sidebar-header {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .zoom-sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+        
+        .zoom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid #333;
+            z-index: 10;
+        }
+        
+        .control-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #ccc;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            min-width: 70px;
+        }
+        
+        .control-btn:hover {
+            background: #333;
+            color: #fff;
+        }
+        
+        .control-btn i {
+            font-size: 20px;
+        }
+        
+        .control-btn span {
+            font-size: 11px;
+        }
+        
+        .control-btn.danger {
+            color: var(--danger-color);
+        }
+        
+        .control-btn.danger:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .control-btn.active i {
+            color: var(--accent-color);
+        }
     </style>
 </head>
 
@@ -617,7 +784,7 @@
                     <h1>DAD of lang</h1>
                 </div>
                 <div class="user-actions" id="userActions">
-                    <div id="guestActions" style="display: flex; gap: 15px;">
+                    <div id="guestActions">
                         <button class="btn btn-outline" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
                         <button class="btn btn-primary" id="registerBtn"><i class="fas fa-user-plus"></i> Kayıt Ol</button>
                     </div>
@@ -642,31 +809,31 @@
                             <span class="language-flag">🌍</span>
                             <span>Tüm Diller</span>
                         </li>
-                        <li class="language-item" data-lang="english">
-                            <span class="language-flag">🇬🇧</span>
+                        <li class="language-item">
+                            <span class="language-flag">UK</span>
                             <span>İngilizce</span>
                         </li>
-                        <li class="language-item" data-lang="spanish">
+                        <li class="language-item">
                             <span class="language-flag">🇪🇸</span>
                             <span>İspanyolca</span>
                         </li>
-                        <li class="language-item" data-lang="french">
+                        <li class="language-item">
                             <span class="language-flag">🇫🇷</span>
                             <span>Fransızca</span>
                         </li>
-                        <li class="language-item" data-lang="german">
+                        <li class="language-item">
                             <span class="language-flag">🇩🇪</span>
                             <span>Almanca</span>
                         </li>
-                        <li class="language-item" data-lang="japanese">
+                        <li class="language-item">
                             <span class="language-flag">🇯🇵</span>
                             <span>Japonca</span>
                         </li>
-                        <li class="language-item" data-lang="chinese">
+                        <li class="language-item">
                             <span class="language-flag">🇨🇳</span>
                             <span>Çince</span>
                         </li>
-                        <li class="language-item" data-lang="russian">
+                        <li class="language-item">
                             <span class="language-flag">🇷🇺</span>
                             <span>Rusça</span>
                         </li>
@@ -676,16 +843,16 @@
                 <div class="sidebar-section">
                     <h2><i class="fas fa-signal"></i> Seviyeler</h2>
                     <ul class="level-list">
-                        <li class="level-item active" data-level="all">
+                        <li class="level-item active">
                             <span>Tüm Seviyeler</span>
                         </li>
-                        <li class="level-item" data-level="beginner">
+                        <li class="level-item">
                             <span>Başlangıç <span class="level-badge level-beginner">A1-A2</span></span>
                         </li>
-                        <li class="level-item" data-level="intermediate">
+                        <li class="level-item">
                             <span>Orta <span class="level-badge level-intermediate">B1-B2</span></span>
                         </li>
-                        <li class="level-item" data-level="advanced">
+                        <li class="level-item">
                             <span>İleri <span class="level-badge level-advanced">C1-C2</span></span>
                         </li>
                     </ul>
@@ -694,19 +861,19 @@
                 <div class="sidebar-section">
                     <h2><i class="fas fa-bullseye"></i> Pratik Türü</h2>
                     <ul class="level-list">
-                        <li class="level-item active" data-topic="all">
+                        <li class="level-item active">
                             <span>Tüm Pratikler</span>
                         </li>
-                        <li class="level-item" data-topic="daily">
+                        <li class="level-item">
                             <span><i class="fas fa-comments"></i> Günlük Konuşma</span>
                         </li>
-                        <li class="level-item" data-topic="business">
+                        <li class="level-item">
                             <span><i class="fas fa-briefcase"></i> İş Dili</span>
                         </li>
-                        <li class="level-item" data-topic="academic">
+                        <li class="level-item">
                             <span><i class="fas fa-graduation-cap"></i> Akademik</span>
                         </li>
-                        <li class="level-item" data-topic="scenario">
+                        <li class="level-item">
                             <span><i class="fas fa-theater-masks"></i> Senaryo Pratiği</span>
                         </li>
                     </ul>
@@ -738,7 +905,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title"><i class="fas fa-user-circle"></i> <span id="authModalTitle">Giriş Yap</span></h2>
-                <span class="close-modal" data-modal="authModal">&times;</span>
+                <span class="close-modal">&times;</span>
             </div>
 
             <div class="auth-tabs">
@@ -809,7 +976,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title"><i class="fas fa-plus-circle"></i> Yeni Dil Pratiği Odası Oluştur</h2>
-                <span class="close-modal" data-modal="createRoomModal">&times;</span>
+                <span class="close-modal">&times;</span>
             </div>
             <form id="createRoomForm">
                 <div class="form-group">
@@ -860,64 +1027,66 @@
     </div>
 
     <div class="modal" id="roomViewModal" style="display: none;">
-        <div class="modal-content" style="width: 90%; max-width: 1000px; height: 80vh; display: flex; flex-direction: column;">
-            <div class="modal-header">
+        <div class="modal-content">
+            <div class="zoom-header">
                 <div>
-                    <h2 class="modal-title" id="roomViewTitle">Oda Adı</h2>
-                    <div id="roomViewInfo" style="font-size: 12px; color: var(--gray-color); margin-top: 5px;">
-                    </div>
+                    <h2 id="roomViewTitle" style="font-size: 18px; color: white;">Oda Adı</h2>
+                    <div id="roomViewInfo" style="font-size: 12px; color: #aaa;">Dil • Seviye</div>
                 </div>
-                <span class="close-modal" id="closeRoomView" data-modal="roomViewModal">&times;</span>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span id="roomMemberCount" style="font-size: 14px; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px;">0 üye</span>
+                    <i class="fas fa-expand" style="cursor: pointer; padding: 5px;" onclick="document.documentElement.requestFullscreen()"></i>
+                </div>
             </div>
 
-            <div style="display: flex; flex: 1; gap: 15px; padding: 15px; overflow: hidden; flex-direction: column;">
-                <div id="videoGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; flex-shrink: 0; max-height: 40%; overflow-y: auto; background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
-                    <div id="localVideoContainer" style="position: relative; background-color: #000; border-radius: 8px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
-                        <video id="localVideo" style="width: 100%; height: 100%; border-radius: 8px; object-fit: cover;"></video>
-                        <div style="position: absolute; bottom: 5px; left: 5px; background-color: rgba(0,0,0,0.7); padding: 5px 10px; border-radius: 4px; font-size: 11px; color: white;">Siz</div>
+            <div class="zoom-main-area">
+                <div class="zoom-video-grid" id="videoGrid">
+                    <div class="zoom-video-card" id="localVideoContainer">
+                        <video id="localVideo" autoplay playsinline muted></video>
+                        <div class="zoom-video-label">Siz (Kamera Kapalı)</div>
                     </div>
                     <div id="remoteVideosContainer" style="display: contents;">
                     </div>
                 </div>
 
-                <div style="display: flex; flex: 1; gap: 15px; min-height: 0; overflow: hidden;">
-                    <div style="flex: 1; display: flex; flex-direction: column; border: 1px solid var(--gray-color); border-radius: 8px; overflow: hidden;">
-                        <div id="messagesContainer" style="flex: 1; overflow-y: auto; padding: 15px; background-color: rgba(255,255,255,0.05);">
-                            <p style="text-align: center; color: var(--gray-color);">Sohbete başlamak için bir mesaj yazın...</p>
-                        </div>
-
-                        <div style="padding: 15px; border-top: 1px solid var(--gray-color); background-color: rgba(0,0,0,0.2);">
-                            <div style="display: flex; gap: 10px;">
-                                <input type="text" id="messageInput" class="form-control" placeholder="Mesaj yazın..." style="flex: 1; padding: 10px; border-radius: 4px;">
-                                <button id="sendMessageBtn" class="btn btn-primary" style="padding: 10px 20px;">
-                                    <i class="fas fa-paper-plane"></i> Gönder
-                                </button>
-                            </div>
-                        </div>
+                <div class="zoom-sidebar" id="zoomSidebar">
+                    <div class="zoom-sidebar-header">
+                        <h3 id="sidebarTitle">Sohbet</h3>
+                        <i class="fas fa-times" style="cursor: pointer;" onclick="toggleZoomSidebar()"></i>
                     </div>
-
-                    <div style="width: 200px; border: 1px solid var(--gray-color); border-radius: 8px; display: flex; flex-direction: column; background-color: rgba(0,0,0,0.2);">
-                        <div style="padding: 15px; border-bottom: 1px solid var(--gray-color);">
-                            <h3 style="margin: 0 0 10px 0; font-size: 14px;">
-                                <i class="fas fa-users"></i> Üyeler
-                            </h3>
-                            <div id="roomMemberCount" style="font-size: 12px; color: var(--accent-color);">0 üye</div>
-                        </div>
-                        <div id="roomMembersContainer" style="flex: 1; overflow-y: auto; padding: 10px;">
+                    <div class="zoom-sidebar-content" id="sidebarContent">
+                        <div id="messagesContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                        <div id="roomMembersContainer" style="display: none;"></div>
+                    </div>
+                    <div id="chatInputArea" style="padding: 15px; border-top: 1px solid #333;">
+                        <div style="display: flex; gap: 5px;">
+                            <input type="text" id="messageInput" class="form-control" placeholder="Mesaj yazın..." style="height: 38px; font-size: 14px; background: #111; border-color: #444;">
+                            <button id="sendMessageBtn" class="btn btn-primary" style="padding: 0 15px;"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div style="padding: 15px; border-top: 1px solid var(--gray-color); background-color: rgba(0,0,0,0.2); display: flex; gap: 10px; justify-content: center;">
-                    <button id="toggleAudioBtn" class="btn" style="padding: 8px 15px; background-color: var(--primary-color);">
-                    <i class="fas fa-microphone"></i> Ses Aç
-                </button>
-                    <button id="toggleVideoBtn" class="btn" style="padding: 8px 15px; background-color: var(--primary-color);">
-                    <i class="fas fa-video"></i> Video Aç
-                </button>
-                    <button id="leaveRoomBtn" class="btn" style="padding: 8px 15px; background-color: var(--danger-color);">
-                    <i class="fas fa-sign-out-alt"></i> Ayrıl
-                </button>
+            <div class="zoom-controls">
+                <div class="control-btn" id="toggleAudioBtn">
+                    <i class="fas fa-microphone-slash" style="color: var(--danger-color);"></i>
+                    <span>Sesi Aç</span>
+                </div>
+                <div class="control-btn" id="toggleVideoBtn">
+                    <i class="fas fa-video-slash" style="color: var(--danger-color);"></i>
+                    <span>Videoyu Aç</span>
+                </div>
+                <div class="control-btn" onclick="toggleZoomSidebar('members')">
+                    <i class="fas fa-users"></i>
+                    <span>Katılımcılar</span>
+                </div>
+                <div class="control-btn" onclick="toggleZoomSidebar('chat')">
+                    <i class="fas fa-comment-alt"></i>
+                    <span>Sohbet</span>
+                </div>
+                <div class="control-btn danger" id="leaveRoomBtn">
+                    <i class="fas fa-phone-slash"></i>
+                    <span>Ayrıl</span>
                 </div>
             </div>
         </div>
@@ -980,6 +1149,50 @@
         // Kullanıcı durumu
         let currentUser = null;
 
+        // Örnek login fonksiyonu
+        async function loginUser(email, password) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.data.user));
+                    return data;
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        // Örnek oda oluşturma
+        async function createRoom(roomData) {
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`${API_BASE_URL}/rooms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(roomData)
+            });
+
+            return await response.json();
+        }
+
         // Seviye etiketini belirle
         function getLevelClass(level) {
             switch (level) {
@@ -1013,54 +1226,37 @@
             const levelClass = getLevelClass(room.level);
             const levelName = getLevelName(room.level);
             // Owner hariç gerçek katılımcı sayısını hesapla
-            // API'den gelen room.members dizisi, o an odada bulunan kullanıcıları içerir
             const totalMembers = room.members ? room.members.length : 0;
-            // Oda sahibi de members dizisinde olabilir, ancak card'da sadece diğer kişileri saymak mantıklı.
-            // Bu simülasyon/mock API'de sadece members.length kullanacağız.
-            const participantCount = totalMembers;
+            const participantCount = Math.max(0, totalMembers - 1); // Owner'ı çıkar
             const displayText = participantCount === 0 ? 'Oda Boş' : `${participantCount} ${participantCount === 1 ? 'Kişi' : 'Kişi'}`;
 
-            // Oda dilinin bayrağını bul (Basit bir haritalama)
-            const languageMap = {
-                'english': '🇬🇧',
-                'spanish': '🇪🇸',
-                'french': '🇫🇷',
-                'german': '🇩🇪',
-                'japanese': '🇯🇵',
-                'chinese': '🇨🇳',
-                'russian': '🇷🇺',
-                'default': '🌍'
-            };
-            const langFlag = languageMap[room.language.toLowerCase()] || languageMap['default'];
-
-
             return `
-                <div class="room-card" data-room-id="${room._id || room.id}" data-room-name="${room.name}" data-room-lang="${room.language}" data-room-level="${room.level}">
-                    <div class="room-header">
-                        <div>
-                            <div class="room-title">${room.name}</div>
-                            <div class="room-language"><i class="fas fa-language"></i> ${langFlag} ${room.language}</div>
-                        </div>
-                        <div class="room-level ${levelClass}"><span class="level-badge ${levelClass}">${levelName}</span></div>
+            <div class="room-card" data-room-id="${room._id}">
+                <div class="room-header">
+                    <div>
+                        <div class="room-title">${room.name}</div>
+                        <div class="room-language"><i class="fas fa-language"></i> ${room.language}</div>
                     </div>
-                    <div class="room-body">
-                        <div class="room-topic">#${room.topic || 'pratik'}</div>
-                        <div class="room-info">
-                            <div class="room-users">
-                                <span class="user-count">${participantCount}</span>
-                                <span>${displayText}</span>
-                            </div>
-                            <div class="room-topic-count"><i class="far fa-comments"></i> 0 Konu</div>
+                    <div class="room-level ${levelClass}">${levelName}</div>
+                </div>
+                <div class="room-body">
+                    <div class="room-topic">#${room.topic || 'pratik'}</div>
+                    <div class="room-info">
+                        <div class="room-users">
+                            <span class="user-count">${participantCount}</span>
+                            <span>${displayText}</span>
                         </div>
-                        <div class="room-description">
-                            ${room.description}
-                        </div>
-                        <div class="room-actions">
-                            <div class="btn-join"><i class="fas fa-microphone"></i> Katıl & Konuş</div>
-                        </div>
+                        <div class="room-topic-count"><i class="far fa-comments"></i> 0 Konu</div>
+                    </div>
+                    <div class="room-description">
+                        ${room.description}
+                    </div>
+                    <div class="room-actions">
+                        <div class="btn-join"><i class="fas fa-microphone"></i> Katıl & Konuş</div>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
         }
 
         // API'den odaları getir ve göster
@@ -1070,13 +1266,15 @@
                 const data = await response.json();
 
                 if (data.data && data.data.rooms) {
-                    const roomsGrid = document.getElementById('roomsGrid');
+                    const roomsGrid = document.querySelector('.rooms-grid');
                     if (roomsGrid) {
-                        // Varolan odaları temizle
-                        roomsGrid.innerHTML = '';
+                        // Varolan odaları temizle (example odaları koru ilk başta)
+                        const existingRooms = roomsGrid.querySelectorAll('[data-room-id]');
+                        existingRooms.forEach(room => room.remove());
 
                         // Yeni odaları ekle
                         data.data.rooms.forEach(room => {
+                            console.log(`Room: ${room.name}, Members: ${room.members ? room.members.length : 0}`, room.members);
                             const roomHTML = createRoomCardHTML(room);
                             roomsGrid.insertAdjacentHTML('beforeend', roomHTML);
                         });
@@ -1087,32 +1285,52 @@
                 }
             } catch (err) {
                 console.error('Rooms loading error:', err);
-                showToast('Odalar yüklenirken hata oluştu: ' + (err.message || 'Bilinmeyen Hata'), 'error');
             }
+        }
+
+        // --- ZOOM SIDEBAR FONKSIYONU ---
+        function toggleZoomSidebar(type) {
+            const sidebar = document.getElementById('zoomSidebar');
+            const sidebarTitle = document.getElementById('sidebarTitle');
+            const messagesContainer = document.getElementById('messagesContainer');
+            const membersContainer = document.getElementById('roomMembersContainer');
+            const chatInput = document.getElementById('chatInputArea');
+
+            if (!type) {
+                sidebar.classList.remove('active');
+                return;
+            }
+
+            if (type === 'chat') {
+                sidebarTitle.textContent = 'Sohbet';
+                messagesContainer.style.display = 'flex';
+                membersContainer.style.display = 'none';
+                chatInput.style.display = 'block';
+            } else {
+                sidebarTitle.textContent = 'Katılımcılar';
+                messagesContainer.style.display = 'none';
+                membersContainer.style.display = 'block';
+                chatInput.style.display = 'none';
+            }
+
+            sidebar.classList.add('active');
         }
 
         // Oda View'ını aç
         let currentRoom = null;
-        let peer = null; // PeerJS instance
-        let localStream = null; // Local MediaStream
-        let peers = {}; // { peerId: RTCPeerConnection }
-
         async function openRoomView(room) {
-            // Önceki odayı temizle
-            if (currentRoom) await leaveRoom(false);
-
             currentRoom = room;
             const modal = document.getElementById('roomViewModal');
 
             // Oda bilgisini doldur
             document.getElementById('roomViewTitle').textContent = room.name;
             document.getElementById('roomViewInfo').innerHTML = `
-                <span>${room.language} • ${room.level}</span>
-            `;
+            <span>${room.language} • ${room.level}</span>
+        `;
 
             // Mesaj container'ını temizle
             const messagesContainer = document.getElementById('messagesContainer');
-            messagesContainer.innerHTML = '<p style="text-align: center; color: var(--gray-color);">Sohbete başlamak için bir mesaj yazın...</p>';
+            messagesContainer.innerHTML = '<p style="text-align: center; color: var(--gray-color); font-size: 12px; padding: 20px;">Sohbete başlamak için bir mesaj yazın...</p>';
 
             // Üyeleri yükle
             await loadRoomMembers(room.id);
@@ -1121,236 +1339,102 @@
             if (socket && socket.connected) {
                 socket.emit('join_room', {
                     roomId: room.id,
-                    roomName: room.name,
-                    userId: currentUser._id, // User ID'yi de gönder
-                    userName: currentUser.name
+                    roomName: room.name
                 });
                 console.log('Joined room:', room.name);
             } else {
-                console.warn('Socket bağlı değil veya tanımlı değil.');
-                showToast('Sohbet sunucusuna bağlanılamadı.', 'error');
+                console.warn('Socket bağlı değil veya tanımlı değil:', {
+                    socket: !!socket,
+                    connected: socket ? socket.connected : false,
+                });
             }
 
             // Modal'ı aç
             modal.style.display = 'flex';
 
-            // Video call'ı başlat
-            await initializeVideoCall(room.id);
+            // Video call'ı başlat (getUserMedia)
+            initializeVideoCall(room.id);
         }
+
+        // Video Call Variables
+        let localStream = null;
+        let peers = {}; // { peerId: RTCPeerConnection }
+        let peerConnection = null;
 
         // Video call'ı initialize et
         async function initializeVideoCall(roomId) {
             try {
-                // Local stream'i al
-                if (!localStream) {
+                // Local stream'i al - zaten varsa tekrar alma
+                if (localStream) {
+                    console.log('Local stream already initialized');
+                } else {
                     try {
                         localStream = await navigator.mediaDevices.getUserMedia({
                             video: {
-                                width: 320,
-                                height: 240
+                                width: 640,
+                                height: 360
                             },
                             audio: true
                         });
+
+                        // Local video'yu göster
+                        const localVideo = document.getElementById('localVideo');
+                        if (localVideo) {
+                            localVideo.srcObject = localStream;
+                            localVideo.play();
+                        }
+
                         console.log('Local stream initialized');
                     } catch (err) {
                         console.error('getUserMedia error:', err);
                         showToast('Kamera/mikrofon erişim reddedildi: ' + err.message, 'error');
-                        // Stream alınamadıysa, butonu kapalı göster
-                        const toggleAudioBtn = document.getElementById('toggleAudioBtn');
-                        const toggleVideoBtn = document.getElementById('toggleVideoBtn');
-                        if (toggleAudioBtn) {
-                            toggleAudioBtn.innerHTML = '<i class="fas fa-microphone-slash"></i> Ses Kapalı';
-                            toggleAudioBtn.style.backgroundColor = 'var(--danger-color)';
-                        }
-                        if (toggleVideoBtn) {
-                            toggleVideoBtn.innerHTML = '<i class="fas fa-video-slash"></i> Video Kapalı';
-                            toggleVideoBtn.style.backgroundColor = 'var(--danger-color)';
-                        }
-                        // Boş stream oluştur (ses/video kapalı olarak)
-                        localStream = new MediaStream();
+                        return;
                     }
                 }
 
-                // Local video'yu göster
-                const localVideo = document.getElementById('localVideo');
-                if (localVideo) {
-                    localVideo.srcObject = localStream;
-                    localVideo.play();
+                // Socket'e video katılma bildir
+                if (socket && socket.connected) {
+                    socket.emit('user_video_enabled', {
+                        roomId: roomId,
+                        userId: currentUser._id,
+                        userName: currentUser.name
+                    });
                 }
-
-                // PeerJS'i başlat (kullanıcı ID'si ile)
-                if (typeof Peer !== 'undefined') {
-                    // PeerJS sunucu konfigürasyonu
-                    const peerConfig = {
-                        host: window.location.hostname === 'localhost' || API_HOST.includes('localhost') ? 'localhost' : window.location.hostname,
-                        // Port ve Path, PeerJS sunucusunun kurulu olduğu yere bağlıdır. 
-                        // Örnekte varsayımsal 4001 portu ve /peerjs yolu kullanılıyor.
-                        port: window.location.protocol === 'https:' ? 443 : 4001,
-                        path: '/peerjs'
-                    };
-
-                    peer = new Peer(currentUser._id, peerConfig);
-
-                    peer.on('open', (id) => {
-                        console.log('PeerJS ID:', id);
-                        // PeerJS'e bağlandıktan sonra diğer kullanıcılara sinyal gönder
-                        if (socket && socket.connected) {
-                            // Socket'e peer ID'yi bildir
-                            socket.emit('user_peer_id', {
-                                roomId: roomId,
-                                userId: currentUser._id,
-                                peerId: id,
-                                userName: currentUser.name
-                            });
-                        }
-                    });
-
-                    // Başka birinden çağrı gelirse
-                    peer.on('call', (call) => {
-                        // Çağrıyı kabul et ve stream'i gönder
-                        call.answer(localStream);
-
-                        call.on('stream', (remoteStream) => {
-                            console.log('Remote stream received');
-                            // Remote video elementini ekle (varsa)
-                            let remoteVideo = document.getElementById(`remote-${call.peer}`);
-                            if (!remoteVideo) {
-                                // Yeni bir video elementi oluştur ve ekle (PeerJS ID'si ile)
-                                // Not: call.peer, arayanın PeerJS ID'sidir. Gerçek kullanıcı ID'sini bulmak için map gerekebilir.
-                                remoteVideo = addRemoteVideo(call.peer, `Kullanıcı ${call.peer.substring(0, 4)}`); // Geçici isim
-                            }
-                            remoteVideo.srcObject = remoteStream;
-                            remoteVideo.play();
-
-                            // Peer'ı kaydet
-                            peers[call.peer] = call;
-                        });
-
-                        // Çağrı kapandığında
-                        call.on('close', () => {
-                            removeRemoteVideo(call.peer);
-                            delete peers[call.peer];
-                            showToast(`Kullanıcı ${call.peer} ayrıldı (Video)`, 'info');
-                        });
-
-                        call.on('error', (err) => {
-                            console.error('Call error:', err);
-                        });
-                    });
-
-                    // Hata yönetimi
-                    peer.on('error', (err) => {
-                        console.error('PeerJS error:', err.type, err);
-                        showToast(`Video bağlantı hatası: ${err.message}`, 'error');
-                    });
-
-                } else {
-                    console.error('PeerJS not loaded!');
-                    showToast('Video/ses için gerekli kütüphane yüklenemedi.', 'error');
-                }
-
             } catch (err) {
                 console.error('initializeVideoCall error:', err);
                 showToast('Video başlatma hatası: ' + err.message, 'error');
             }
         }
 
-        // Sinyalleme sunucusundan gelen peer ID'ye göre diğer kullanıcıyı ara
-        function callOtherUser(peerId, userId, userName) {
-            if (!peer || !localStream || peer.disconnected) {
-                console.error('PeerJS is not ready or disconnected.');
-                // PeerJS hazır değilse tekrar denenmeli
-                // showToast('Video görüşmesi başlatılamadı, PeerJS hazır değil.', 'error');
-                return;
-            }
-            if (peerId === peer.id) return; // Kendimizi aramıyoruz
-
-            // Daha önce aranmış mı kontrol et
-            if (peers[peerId]) {
-                console.log(`Peer ${peerId} already connected.`);
-                return;
-            }
-
-            console.log(`Calling peer: ${peerId}`);
-            const call = peer.call(peerId, localStream);
-
-            call.on('stream', (remoteStream) => {
-                console.log('Remote stream received from called peer');
-                // Remote video elementini ekle
-                let remoteVideo = document.getElementById(`remote-${peerId}`);
-                if (!remoteVideo) {
-                    remoteVideo = addRemoteVideo(peerId, userName);
-                }
-                remoteVideo.srcObject = remoteStream;
-                remoteVideo.play();
-
-                // Peer'ı kaydet
-                peers[peerId] = call;
-            });
-
-            call.on('close', () => {
-                removeRemoteVideo(peerId);
-                delete peers[peerId];
-                showToast(`${userName} ayrıldı (Video)`, 'info');
-            });
-
-            call.on('error', (err) => {
-                console.error('Call error with peer', peerId, err);
-                showToast(`Video görüşmesi hatası: ${userName}`, 'error');
-                removeRemoteVideo(peerId);
-                delete peers[peerId];
-            });
-        }
-
-
-        // Remote video ekle
-        // Not: PeerJS'te call.peer ID'si kullanılır, bu nedenle bu fonksiyonu çağıranlar PeerID'yi userId olarak iletmelidir.
-        function addRemoteVideo(peerId, userName) {
+        // Remote video ekle (Zoom tarzı kart)
+        function addRemoteVideo(userId, userName) {
             const container = document.getElementById('remoteVideosContainer');
 
-            const videoDiv = document.createElement('div');
-            // PeerJS ID'sini kullan
-            videoDiv.id = `video-${peerId}`;
-            videoDiv.style.position = 'relative';
-            videoDiv.style.backgroundColor = '#000';
-            videoDiv.style.borderRadius = '8px';
-            videoDiv.style.aspectRatio = '16/9';
-            videoDiv.style.display = 'flex';
-            videoDiv.style.alignItems = 'center';
-            videoDiv.style.justifyContent = 'center';
+            const videoCard = document.createElement('div');
+            videoCard.id = `video-${userId}`;
+            videoCard.className = 'zoom-video-card';
 
             const video = document.createElement('video');
-            video.id = `remote-${peerId}`;
-            video.style.width = '100%';
-            video.style.height = '100%';
-            video.style.borderRadius = '8px';
-            video.style.objectFit = 'cover';
+            video.id = `remote-${userId}`;
             video.autoplay = true;
-            video.playsinline = true; // iOS için önemli
+            video.playsinline = true;
 
             const label = document.createElement('div');
-            label.style.position = 'absolute';
-            label.style.bottom = '5px';
-            label.style.left = '5px';
-            label.style.backgroundColor = 'rgba(0,0,0,0.7)';
-            label.style.padding = '5px 10px';
-            label.style.borderRadius = '4px';
-            label.style.fontSize = '11px';
-            label.style.color = 'white';
+            label.className = 'zoom-video-label';
             label.textContent = userName;
 
-            videoDiv.appendChild(video);
-            videoDiv.appendChild(label);
-            container.appendChild(videoDiv);
+            videoCard.appendChild(video);
+            videoCard.appendChild(label);
+            container.appendChild(videoCard);
 
             return video;
         }
 
         // Remote video'yu kaldır
-        function removeRemoteVideo(peerId) {
-            const videoDiv = document.getElementById(`video-${peerId}`);
-            if (videoDiv) {
-                videoDiv.remove();
+        function removeRemoteVideo(userId) {
+            const videoCard = document.getElementById(`video-${userId}`);
+            if (videoCard) {
+                videoCard.remove();
             }
         }
 
@@ -1376,27 +1460,21 @@
                     // Üyeleri HTML olarak render et
                     let html = '';
                     (room.members || []).forEach(member => {
-                        // API'den gelen veriye göre uyarlama yapıldı
-                        const memberId = member._id || member.id;
                         const memberName = member.name || 'Bilinmiyor';
                         const initials = memberName.charAt(0).toUpperCase();
-                        const avatarColor = getAvatarColor(memberId);
-                        // Bu basit örnekte herkesin "Çevrimiçi" olduğunu varsayıyoruz
-                        const isOnline = true;
+                        const avatarColor = getAvatarColor(member._id || member.id);
 
                         html += `
-                            <div style="padding: 10px; margin-bottom: 8px; background-color: rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; gap: 10px;">
-                                <div style="width: 32px; height: 32px; border-radius: 50%; background-color: ${avatarColor}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
-                                    ${initials}
-                                </div>
-                                <div style="flex: 1; min-width: 0;">
-                                    <div style="font-size: 12px; font-weight: 500;">${memberName} ${memberId === currentUser._id ? '(Siz)' : ''}</div>
-                                    <div style="font-size: 10px; color: ${isOnline ? 'var(--success-color)' : 'var(--gray-color)'};">
-                                        ${isOnline ? '🟢 Çevrimiçi' : '⚫ Çevrimdışı'}
-                                    </div>
-                                </div>
+                        <div style="padding: 10px; margin-bottom: 8px; background-color: rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: ${avatarColor}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
+                                ${initials}
                             </div>
-                        `;
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-size: 12px; font-weight: 500;">${memberName}</div>
+                                <div style="font-size: 10px; color: var(--accent-color);">🟢 Çevrimiçi</div>
+                            </div>
+                        </div>
+                    `;
                     });
 
                     container.innerHTML = html;
@@ -1408,7 +1486,7 @@
 
         // Mesaj gönder
         async function sendMessage(text) {
-            if (!text.trim() || !currentRoom || !currentUser) return;
+            if (!text.trim() || !currentRoom) return;
 
             try {
                 // Socket ile mesaj gönder
@@ -1423,8 +1501,6 @@
                         }
                     });
                     console.log('Message sent:', text);
-                } else {
-                    showToast('Mesaj sunucuya gönderilemedi (Socket bağlı değil)', 'error');
                 }
             } catch (err) {
                 console.error('Send message error:', err);
@@ -1442,20 +1518,17 @@
                 placeholder.remove();
             }
 
-            const isCurrentUser = currentUser && message.sender.id === currentUser._id;
+            const isCurrentUser = message.sender.id === currentUser._id;
             const messageHTML = `
-                <div style="margin-bottom: 15px; ${isCurrentUser ? 'text-align: right;' : ''}">
-                    <div style="display: inline-block; max-width: 70%; ${isCurrentUser ? 'background-color: var(--primary-color);' : 'background-color: rgba(255,255,255,0.1);'} padding: 10px 15px; border-radius: 8px; word-break: break-word;">
-                        <div style="font-size: 11px; color: var(--accent-color); margin-bottom: 5px;">
-                            ${message.sender.name}
-                        </div>
-                        <div>${message.text}</div>
-                        <div style="font-size: 10px; color: var(--gray-color); margin-top: 5px; text-align: ${isCurrentUser ? 'right' : 'left'};">
-                            ${new Date().toLocaleTimeString('tr-TR')}
-                        </div>
+            <div style="margin-bottom: 5px; ${isCurrentUser ? 'text-align: right;' : ''}">
+                <div style="display: inline-block; max-width: 90%; ${isCurrentUser ? 'background-color: var(--primary-color);' : 'background-color: #333;'} padding: 8px 12px; border-radius: 12px; word-break: break-word;">
+                    <div style="font-size: 10px; color: #aaa; margin-bottom: 2px;">
+                        ${message.sender.name}
                     </div>
+                    <div style="font-size: 13px;">${message.text}</div>
                 </div>
-            `;
+            </div>
+        `;
 
             container.insertAdjacentHTML('beforeend', messageHTML);
 
@@ -1464,8 +1537,8 @@
         }
 
         // Oda'dan ayrıl
-        async function leaveRoom(shouldHideModal = true) {
-            if (!currentRoom || !currentUser) return;
+        async function leaveRoom() {
+            if (!currentRoom || !socket) return;
 
             try {
                 // Önce API'ye ayrılma isteği gönder (database'den çıkart)
@@ -1484,57 +1557,14 @@
                 }
 
                 // Socket'e bildir
-                if (socket) {
-                    socket.emit('leave_room', {
-                        roomId: currentRoom.id,
-                        roomName: currentRoom.name,
-                        userId: currentUser._id
-                    });
-                }
+                socket.emit('leave_room', {
+                    roomId: currentRoom.id,
+                    roomName: currentRoom.name
+                });
 
-                // PeerJS bağlantılarını kapat
-                if (peer) {
-                    // Diğer peer'lara bağlantıyı kapatma sinyali gönder
-                    Object.values(peers).forEach(call => {
-                        call.close();
-                    });
-                    peers = {};
-                    peer.destroy();
-                    peer = null;
-                }
-
-                // Local stream'i durdur
-                if (localStream) {
-                    localStream.getTracks().forEach(track => track.stop());
-                    localStream = null;
-                }
-
-                // Remote videoları temizle
-                document.getElementById('remoteVideosContainer').innerHTML = '';
-                // Local video'yu da temizle
-                const localVideo = document.getElementById('localVideo');
-                if (localVideo) localVideo.srcObject = null;
-
-                // Kontrolleri sıfırla
-                const toggleAudioBtn = document.getElementById('toggleAudioBtn');
-                const toggleVideoBtn = document.getElementById('toggleVideoBtn');
-                if (toggleAudioBtn) {
-                    toggleAudioBtn.innerHTML = '<i class="fas fa-microphone"></i> Ses Aç';
-                    toggleAudioBtn.style.backgroundColor = 'var(--primary-color)';
-                }
-                if (toggleVideoBtn) {
-                    toggleVideoBtn.innerHTML = '<i class="fas fa-video"></i> Video Aç';
-                    toggleVideoBtn.style.backgroundColor = 'var(--primary-color)';
-                }
-
-
-                const roomName = currentRoom.name;
                 currentRoom = null;
-
-                if (shouldHideModal) {
-                    document.getElementById('roomViewModal').style.display = 'none';
-                    showToast(`Odadan ayrıldınız: ${roomName}`, 'success');
-                }
+                document.getElementById('roomViewModal').style.display = 'none';
+                showToast('Odadan ayrıldınız', 'success');
                 // Oda listesini ve üyeleri güncelle
                 await loadAndRenderRooms();
             } catch (err) {
@@ -1547,31 +1577,26 @@
             const usersList = document.getElementById('activeUsersList');
             if (!usersList) return;
 
-            // Kendimizi listeden çıkar
-            const filteredUsers = users.filter(user => currentUser && user.id !== currentUser._id);
-
-            if (!filteredUsers || filteredUsers.length === 0) {
+            if (!users || users.length === 0) {
                 usersList.innerHTML = '<p style="color: var(--gray-color); padding: 20px; text-align: center;">Şu an çevrimiçi kullanıcı yok</p>';
                 return;
             }
 
             // Kullanıcı kartlarını HTML olarak oluştur
             let html = '';
-            filteredUsers.forEach(user => {
+            users.forEach(user => {
                 const initials = (user.name || 'U').charAt(0).toUpperCase();
                 const avatarColor = getAvatarColor(user.id);
-                // languages alanı yoksa boş bırak
-                const languagesText = user.languages && Array.isArray(user.languages) ? user.languages.join(', ') : 'Dil Bilgisi Yok';
 
                 html += `
-                    <div class="user-card">
-                        <div class="user-avatar" style="background-color: ${avatarColor};">${initials}</div>
-                        <div class="user-info">
-                            <div class="user-name">${user.name || 'Anonim'}</div>
-                            <div class="user-languages" style="color: var(--accent-color); font-size: 12px;">${languagesText}</div>
-                        </div>
+                <div class="user-card">
+                    <div class="user-avatar" style="background-color: ${avatarColor};">${initials}</div>
+                    <div class="user-info">
+                        <div class="user-name">${user.name || 'Anonim'}</div>
+                        <div class="user-languages" style="color: var(--accent-color); font-size: 12px;">🟢 Çevrimiçi</div>
                     </div>
-                `;
+                </div>
+            `;
             });
 
             usersList.innerHTML = html;
@@ -1585,7 +1610,6 @@
             ];
             // userId'nin hash'ini alarak bir renk seç
             let hash = 0;
-            if (!userId) return colors[0]; // fallback
             for (let i = 0; i < userId.length; i++) {
                 hash = userId.charCodeAt(i) + ((hash << 5) - hash);
             }
@@ -1624,8 +1648,6 @@
                     console.log('Socket connected', socket.id);
                     const statusEl = document.getElementById('socketStatus');
                     if (statusEl) statusEl.style.display = 'inline';
-                    // Bağlandıktan sonra aktif kullanıcı listesini çekme isteği gönder
-                    socket.emit('request_active_users');
                 });
 
                 socket.on('connect_error', (err) => {
@@ -1670,18 +1692,10 @@
                     console.log('User left room:', data);
                     // Her zaman oda listesini güncelle
                     loadAndRenderRooms();
-                    removeRemoteVideo(data.user.id); // Video bağlantısını da kapat
 
                     if (currentRoom && currentRoom.id === data.roomId) {
                         showToast(`${data.user.name} odadan ayrıldı`, 'info');
                         loadRoomMembers(currentRoom.id);
-
-                        // Peer bağlantısını da kapat
-                        // Not: Peerjs'te peerId, userId yerine kullanılır
-                        if (peers[data.user.id]) {
-                            peers[data.user.id].close();
-                            delete peers[data.user.id];
-                        }
                     }
                 });
 
@@ -1692,19 +1706,10 @@
                     }
                 });
 
-                // Diğer kullanıcı Peer ID'sini gönderdiğinde
-                socket.on('user_peer_id', (data) => {
-                    console.log('User Peer ID received:', data);
-                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
-                        // Yeni katılan kullanıcıyı ara
-                        callOtherUser(data.peerId, data.userId, data.userName);
-                    }
-                });
-
                 // Video events
                 socket.on('user_video_enabled', (data) => {
                     console.log('User video enabled:', data);
-                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                    if (currentRoom && currentRoom.id === data.roomId) {
                         // Ekrana video ekle (simülasyon - gerçek video P2P ile)
                         if (!document.getElementById(`video-${data.userId}`)) {
                             addRemoteVideo(data.userId, data.userName);
@@ -1715,25 +1720,11 @@
 
                 socket.on('user_video_disabled', (data) => {
                     console.log('User video disabled:', data);
-                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
+                    if (currentRoom && currentRoom.id === data.roomId) {
                         removeRemoteVideo(data.userId);
                         showToast(`${data.userName} videosunu kapattı`, 'info');
                     }
                 });
-
-                socket.on('user_audio_enabled', (data) => {
-                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
-                        showToast(`${data.userName} sesini açtı`, 'info');
-                    }
-                });
-
-                socket.on('user_audio_disabled', (data) => {
-                    if (currentRoom && currentRoom.id === data.roomId && data.userId !== currentUser._id) {
-                        showToast(`${data.userName} sesini kapattı`, 'info');
-                    }
-                });
-
-
             } catch (err) {
                 console.error('connectSocket error', err);
             }
@@ -1803,7 +1794,6 @@
         }
         const authModal = document.getElementById('authModal');
         const createRoomModal = document.getElementById('createRoomModal');
-        const roomViewModal = document.getElementById('roomViewModal'); // Eksik olan ekle
         const closeModals = document.querySelectorAll('.close-modal');
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
@@ -1850,31 +1840,20 @@
 
         // Modalı kapat
         closeModals.forEach(closeBtn => {
-            // data-modal attribute'ünü kullanarak hangi modalın kapatılacağını belirle
             closeBtn.addEventListener('click', (e) => {
-                const modalId = e.target.getAttribute('data-modal');
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    if (modalId === 'roomViewModal') {
-                        // Oda görünümünü kapatmadan önce odayı terk et
-                        leaveRoom();
-                    } else {
-                        modal.style.display = 'none';
-                    }
-                }
+                const modal = e.target.closest('.modal');
+                modal.style.display = 'none';
             });
         });
-
 
         // Modal dışına tıklayınca kapat
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) {
-                const modal = e.target;
-                if (modal.id === 'roomViewModal') {
-                    // Oda görünümünü kapatmadan önce odayı terk et
+                // Eğer roomViewModal ise ayrılma işlemini tetikle
+                if (e.target.id === 'roomViewModal') {
                     leaveRoom();
                 } else {
-                    modal.style.display = 'none';
+                    e.target.style.display = 'none';
                 }
             }
         });
@@ -1889,7 +1868,6 @@
         const messageInput = document.getElementById('messageInput');
         const sendMessageBtn = document.getElementById('sendMessageBtn');
         const leaveRoomBtn = document.getElementById('leaveRoomBtn');
-        const closeRoomViewBtn = document.getElementById('closeRoomView');
         const toggleAudioBtn = document.getElementById('toggleAudioBtn');
         const toggleVideoBtn = document.getElementById('toggleVideoBtn');
 
@@ -1909,7 +1887,6 @@
         if (messageInput) {
             messageInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    e.preventDefault(); // Enter tuşunun default action'ını engelle
                     const text = messageInput.value;
                     if (text.trim()) {
                         sendMessage(text);
@@ -1926,14 +1903,7 @@
             });
         }
 
-        // Modal'ı kapat (room view)
-        if (closeRoomViewBtn) {
-            closeRoomViewBtn.addEventListener('click', () => {
-                leaveRoom();
-            });
-        }
-
-        // Ses aç/kapat
+        // Ses aç/kapat (Zoom Stil)
         if (toggleAudioBtn) {
             toggleAudioBtn.addEventListener('click', () => {
                 if (!localStream) {
@@ -1942,21 +1912,27 @@
                 }
 
                 const audioTracks = localStream.getAudioTracks();
-                if (audioTracks.length === 0) {
-                    showToast('Ses aygıtı bulunamadı', 'error');
-                    return;
-                }
-
-                const isCurrentlyEnabled = audioTracks[0].enabled;
+                const isCurrentlyEnabled = audioTracks.length > 0 && audioTracks[0].enabled;
 
                 audioTracks.forEach(track => {
                     track.enabled = !isCurrentlyEnabled;
                 });
 
                 const isNowEnabled = !isCurrentlyEnabled;
-                toggleAudioBtn.style.backgroundColor = isNowEnabled ? 'var(--success-color)' : 'var(--primary-color)';
-                toggleAudioBtn.innerHTML = isNowEnabled ? '<i class="fas fa-microphone"></i> Ses Aç' : '<i class="fas fa-microphone-slash"></i> Ses Kapat';
-                showToast(isNowEnabled ? '🎤 Ses açıldı' : '🔇 Ses kapatıldı', 'info');
+                const icon = toggleAudioBtn.querySelector('i');
+                const span = toggleAudioBtn.querySelector('span');
+
+                if (isNowEnabled) {
+                    icon.className = 'fas fa-microphone';
+                    icon.style.color = '#ccc';
+                    span.textContent = 'Sesi Kapat';
+                    showToast('🎤 Ses açıldı', 'info');
+                } else {
+                    icon.className = 'fas fa-microphone-slash';
+                    icon.style.color = 'var(--danger-color)';
+                    span.textContent = 'Sesi Aç';
+                    showToast('🔇 Ses kapatıldı', 'info');
+                }
 
                 // Socket'e bildir
                 if (socket && currentRoom) {
@@ -1969,7 +1945,7 @@
             });
         }
 
-        // Video aç/kapat
+        // Video aç/kapat (Zoom Stil)
         if (toggleVideoBtn) {
             toggleVideoBtn.addEventListener('click', () => {
                 if (!localStream) {
@@ -1978,21 +1954,30 @@
                 }
 
                 const videoTracks = localStream.getVideoTracks();
-                if (videoTracks.length === 0) {
-                    showToast('Video aygıtı bulunamadı', 'error');
-                    return;
-                }
-
-                const isCurrentlyEnabled = videoTracks[0].enabled;
+                const isCurrentlyEnabled = videoTracks.length > 0 && videoTracks[0].enabled;
 
                 videoTracks.forEach(track => {
                     track.enabled = !isCurrentlyEnabled;
                 });
 
                 const isNowEnabled = !isCurrentlyEnabled;
-                toggleVideoBtn.style.backgroundColor = isNowEnabled ? 'var(--success-color)' : 'var(--primary-color)';
-                toggleVideoBtn.innerHTML = isNowEnabled ? '<i class="fas fa-video"></i> Video Aç' : '<i class="fas fa-video-slash"></i> Video Kapat';
-                showToast(isNowEnabled ? '📹 Video açıldı' : '📹 Video kapatıldı', 'info');
+                const icon = toggleVideoBtn.querySelector('i');
+                const span = toggleVideoBtn.querySelector('span');
+                const label = document.querySelector('#localVideoContainer .zoom-video-label');
+
+                if (isNowEnabled) {
+                    icon.className = 'fas fa-video';
+                    icon.style.color = '#ccc';
+                    span.textContent = 'Videoyu Kapat';
+                    label.textContent = 'Siz';
+                    showToast('📹 Video açıldı', 'info');
+                } else {
+                    icon.className = 'fas fa-video-slash';
+                    icon.style.color = 'var(--danger-color)';
+                    span.textContent = 'Videoyu Aç';
+                    label.textContent = 'Siz (Kamera Kapalı)';
+                    showToast('📹 Video kapatıldı', 'info');
+                }
 
                 // Socket'e bildir
                 if (socket && currentRoom) {
@@ -2025,8 +2010,6 @@
                 connectSocket(localStorage.getItem('token'));
                 authModal.style.display = 'none';
                 loginForm.reset();
-                // Oda listesini ve üyeleri güncelle
-                await loadAndRenderRooms();
                 showToast(res.message || 'Giriş başarılı!', 'success');
             } catch (err) {
                 console.error('Login error', err);
@@ -2076,8 +2059,6 @@
                 connectSocket(localStorage.getItem('token'));
                 authModal.style.display = 'none';
                 registerForm.reset();
-                // Oda listesini ve üyeleri güncelle
-                await loadAndRenderRooms();
                 showToast(res.message || 'Kayıt başarılı! Hoş geldiniz.', 'success');
             } catch (err) {
                 console.error('Register error', err);
@@ -2145,38 +2126,17 @@
 
         // Çıkış butonu
         logoutBtn.addEventListener('click', () => {
-            // Aktif odadan ayrılmayı dene
-            if (currentRoom) {
-                leaveRoom(false); // Modal'ı gizleme işini manuel yap
-            }
-
             currentUser = null;
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-
-            // Socket bağlantısını kapat
             if (socket) {
                 try {
                     socket.disconnect();
                 } catch (e) { /* ignore */ }
                 socket = null;
             }
-
-            // Peer bağlantılarını temizle
-            if (peer) {
-                try {
-                    peer.destroy();
-                } catch (e) { /* ignore */ }
-                peer = null;
-            }
-
-            // UI'ı güncelle
             guestActions.style.display = 'flex';
             userProfile.style.display = 'none';
-            // Oda listesini ve aktif kullanıcıları yeniden yükle
-            loadAndRenderRooms();
-            updateActiveUsersList([]);
-
             showToast('Başarıyla çıkış yaptınız!', 'success');
         });
 
@@ -2186,7 +2146,6 @@
             item.addEventListener('click', () => {
                 languageItems.forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
-                // Filter logic will go here
             });
         });
 
@@ -2196,7 +2155,6 @@
             item.addEventListener('click', () => {
                 levelItems.forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
-                // Filter logic will go here
             });
         });
 
@@ -2204,8 +2162,7 @@
         function attachJoinButtonListeners() {
             const joinButtons = document.querySelectorAll('.btn-join');
             joinButtons.forEach(button => {
-                // Her seferinde remove ve add, dinamik yüklenen elementler için önemlidir
-                button.removeEventListener('click', handleJoinClick);
+                button.removeEventListener('click', handleJoinClick); // Eski listener'ı kaldır
                 button.addEventListener('click', handleJoinClick);
             });
         }
@@ -2219,11 +2176,11 @@
             }
 
             const roomCard = e.currentTarget.closest('.room-card');
-            const roomId = roomCard.getAttribute('data-room-id');
-            const roomTitle = roomCard.getAttribute('data-room-name');
-            const roomLanguage = roomCard.getAttribute('data-room-lang');
-            const roomLevel = roomCard.getAttribute('data-room-level');
+            const roomTitle = roomCard.querySelector('.room-title').textContent;
+            const roomLanguage = roomCard.querySelector('.room-language').textContent.trim();
+            const roomLevel = roomCard.querySelector('.room-level').textContent.trim();
             const roomDescription = roomCard.querySelector('.room-description') ? roomCard.querySelector('.room-description').textContent : '';
+            const roomId = roomCard.getAttribute('data-room-id');
 
             try {
                 const token = localStorage.getItem('token');
@@ -2233,36 +2190,35 @@
                 }
 
                 if (roomId) {
-                    // 1. API'ye odaya katılma isteği gönder (database'e ekle)
                     const res = await fetch(`${API_BASE_URL}/rooms/${roomId}/join`, {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-
+                    let err = null;
                     let data = null;
                     try {
                         data = await res.json();
                     } catch (e) {}
-
                     if (!res.ok) {
-                        // HATA DÜZELTME BÖLGESİ (Ln 2241 ve 2244'e karşılık gelir)
-                        // Karmaşık optional chaining ve ternary ifadeleri yerine daha temiz bir kontrol yapısı kullanıldı.
-                        const isAlreadyMember = data && (data.error === 'Zaten üye' ||
-                            (data.message && ((typeof data.message.tr === 'string' && data.message.tr.includes('Zaten')) ||
-                                (typeof data.message.en === 'string' && data.message.en.includes('Already')))));
-
-                        if (isAlreadyMember) {
-                            // Başarılı say ve odayı açma adımına geç
-                        } else {
-                            // Ln 2255'teki hatanın olası nedeni olan optional chaining kaldırıldı.
-                            showToast((data && (data.error || data.message)) || 'Katılma hatası', 'error');
+                        // Eğer hata 'Zaten üye' ise modalı aç
+                        if (data && (data.error === 'Zaten üye' || (data.message && (data.message.tr ? data.message.tr.includes('Zaten') || data.message.en ? data.message.en.includes('Already') : false : false)))) {
+                            openRoomView({
+                                id: roomId,
+                                name: roomTitle,
+                                language: roomLanguage,
+                                level: roomLevel,
+                                description: roomDescription
+                            });
+                            showToast('Odaya zaten üyeysiniz, açılıyor...', 'info');
                             return;
                         }
+                        // Hatalı satırı sil ve yerine bunu yapıştır:
+                        showToast((data && data.error) ? data.error : 'Katılma hatası', 'error');
+                        return;
                     }
-
-                    // 2. Başarılı ise modalı aç
+                    // Başarılı ise modalı aç
                     openRoomView({
                         id: roomId,
                         name: roomTitle,
@@ -2270,10 +2226,6 @@
                         level: roomLevel,
                         description: roomDescription
                     });
-
-                    // Odalar listesini güncelle (üye sayısını yansıtması için)
-                    await loadAndRenderRooms();
-
                 } else {
                     showToast('Bu oda için bilgi alınamadı', 'error');
                 }
@@ -2309,24 +2261,16 @@
         }
 
         function updateUIAfterAuth() {
-            // Kontrol et: guestActions ve userProfile null olmamalı
-            if (guestActions) guestActions.style.display = 'flex';
-            if (userProfile) userProfile.style.display = 'none';
-
-            if (currentUser) {
-                if (userDisplayName) userDisplayName.textContent = currentUser.name || 'Kullanıcı';
-                if (userAvatar) userAvatar.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
-            }
+            guestActions.style.display = 'none';
+            userProfile.style.display = 'flex';
+            userDisplayName.textContent = currentUser.name;
+            userAvatar.textContent = currentUser.avatar || currentUser.name.charAt(0).toUpperCase();
         }
 
         // Get user profile using token
         async function fetchCurrentUser() {
             const token = localStorage.getItem('token');
-            if (!token) {
-                currentUser = null;
-                localStorage.removeItem('user');
-                return null;
-            }
+            if (!token) return null;
 
             try {
                 const res = await fetch(`${API_BASE_URL}/auth/me`, {
@@ -2339,7 +2283,6 @@
                     // token invalid/expired
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
-                    currentUser = null;
                     return null;
                 }
 
@@ -2360,75 +2303,6 @@
                 console.error('fetchCurrentUser error', err);
             }
             return null;
-        }
-
-        // Perform an API login and store token
-        async function loginUser(email, password) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/auth/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email,
-                        password
-                    })
-                });
-
-                let data;
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    console.error('Response parse error:', e, 'Response status:', response.status);
-                    throw new Error(`Sunucu hatası (HTTP ${response.status}): Geçersiz yanıt`);
-                }
-
-                if (!response.ok || data.status !== 'success') {
-                    const msg = formatApiError(data, response);
-                    throw new Error(msg || 'Giriş başarısız');
-                }
-                // store token
-                if (data.token) localStorage.setItem('token', data.token);
-                if (data.data && data.data.user) localStorage.setItem('user', JSON.stringify(data.data.user));
-                return data;
-            } catch (err) {
-                console.error('loginUser error:', err);
-                throw err;
-            }
-        }
-
-        // Perform an API register
-        async function registerUser(payload) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                let data;
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    console.error('Response parse error:', e, 'Response status:', response.status);
-                    throw new Error(`Sunucu hatası (HTTP ${response.status}): Geçersiz yanıt`);
-                }
-
-                if (!response.ok || (data.status && data.status !== 'success')) {
-                    const msg = formatApiError(data, response);
-                    throw new Error(msg || `Kayıt başarısız (status ${response.status})`);
-                }
-                // store token if provided
-                if (data.token) localStorage.setItem('token', data.token);
-                if (data.data && data.data.user) localStorage.setItem('user', JSON.stringify(data.data.user));
-                return data;
-            } catch (err) {
-                console.error('registerUser error:', err);
-                throw err;
-            }
         }
 
         // Format API error payloads into a readable string
@@ -2476,14 +2350,12 @@
                     updateUIAfterAuth();
                     connectSocket(token);
                 } else {
-                    // Token geçersizse UI'ı misafir moduna getir
-                    if (guestActions) guestActions.style.display = 'flex';
-                    if (userProfile) userProfile.style.display = 'none';
+                    guestActions.style.display = 'flex';
+                    userProfile.style.display = 'none';
                 }
             } else {
-                // Token yoksa UI'ı misafir moduna getir
-                if (guestActions) guestActions.style.display = 'flex';
-                if (userProfile) userProfile.style.display = 'none';
+                guestActions.style.display = 'flex';
+                userProfile.style.display = 'none';
             }
 
             // Sayfa yüklenmesinde odaları getir ve göster
