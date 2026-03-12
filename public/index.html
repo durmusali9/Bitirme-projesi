@@ -2209,14 +2209,34 @@
                 }
             };
 
-            pc.ontrack = (event) => {
-                let remoteVideo = document.getElementById(`remote-${remoteSocketId}`);
-                if (!remoteVideo) {
-                    const userName = (remoteUser && (remoteUser.userName || remoteUser.name || remoteUser.user ? .name)) || 'Konuşmacı';
-                    remoteVideo = addRemoteVideo(remoteSocketId, userName);
-                }
-                remoteVideo.srcObject = event.streams[0];
-            };
+          pc.ontrack = (event) => {
+    let remoteVideo = document.getElementById(`remote-${remoteSocketId}`);
+
+    if (!remoteVideo) {
+        // İsim belirleme kısmını en güvenli ve uzun yoldan yapıyoruz
+        let userName = 'Konuşmacı';
+        
+        if (remoteUser) {
+            if (remoteUser.userName) {
+                userName = remoteUser.userName;
+            } else if (remoteUser.name) {
+                userName = remoteUser.name;
+            } else if (remoteUser.user && remoteUser.user.name) {
+                userName = remoteUser.user.name;
+            }
+        }
+
+        remoteVideo = addRemoteVideo(remoteSocketId, userName);
+    }
+
+    // Gelen track'i (ses veya görüntü) videoya bağla
+    if (event.streams && event.streams[0]) {
+        remoteVideo.srcObject = event.streams[0];
+    } else {
+        // Eğer stream yoksa gelen track'ten yeni bir stream oluştur
+        remoteVideo.srcObject = new MediaStream([event.track]);
+    }
+};
 
             pc.onconnectionstatechange = () => {
                 if (pc.connectionState === 'disconnected' || pc.connectionState === 'failed' || pc.connectionState === 'closed') {
@@ -3497,5 +3517,6 @@
         });
     </script>
 </body>
+
 
 </html>
