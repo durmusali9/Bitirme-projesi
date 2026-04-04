@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="24" viewBox="0 0 40 24">
+  <rect width="40" height="24" fill="#DE2910"/>
+  <!-- Large star -->
+  <g fill="#FFDE00">
+    <polygon points="6.5,6.5 8.2,9.2 11.4,9.6 8.9,11.6 9.6,14.6 6.5,13 3.4,14.6 4.1,11.6 1.6,9.6 4.8,9.2" transform="translate(0,0) scale(0.6)" />
+  </g>
+  <!-- Four small stars arranged -->
+  <g fill="#FFDE00">
+    <polygon points="22,4 23,6 25,6 23.5,7.5 24,9.5 22,8.3 20,9.5 20.5,7.5 19,6 21,6" transform="translate(-2,0) scale(0.25)" />
+    <polygon points="26,6 27,8 29,8 27.5,9.5 28,11.5 26,10.3 24,11.5 24.5,9.5 23,8 25,8" transform="translate(-1,0) scale(0.25)" />
+    <polygon points="26,10 27,12 29,12 27.5,13.5 28,15.5 26,14.3 24,15.5 24.5,13.5 23,12 25,12" transform="translate(-1,2) scale(0.25)" />
+    <polygon points="22,12 23,14 25,14 23.5,15.5 24,17.5 22,16.3 20,17.5 20.5,15.5 19,14 21,14" transform="translate(-2,2) scale(0.25)" />
+  </g>
+</svg>
