@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="40" height="24" viewBox="0 0 40 24">
-  <rect width="40" height="24" fill="#C60B1E"/>
-  <rect y="6" width="40" height="12" fill="#FFCC00"/>
-  <!-- small coat placeholder: a simple shield -->
-  <g transform="translate(30,6) scale(0.6)">
-    <path d="M8 2c0 4-4 4-4 8 0 2 2 4 4 4s4-2 4-4c0-4-4-4-4-8z" fill="#C60B1E" stroke="#000" stroke-width="0.4"/>
-  </g>
-</svg>
